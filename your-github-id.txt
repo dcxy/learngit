@@ -1,5 +1,2 @@
-Gyour-github-id.txtit is a version control system.
-Git is free software.
-Thank you for your teaching!Best wishes to you!
-hello world
-mbq
+谢谢廖老师，通过学习您的Git教程，受益匪浅。
+
