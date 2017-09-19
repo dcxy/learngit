@@ -1,0 +1,136 @@
+- CVS和SVN都是集中式的版本控制系统，而Git是分布式版本控制系统。
+
+    - 集中式版本控制系统：版本库是集中存放在中央服务器的。先借——再改——再还。
+
+    - 必须联网
+
+    - 分布式
+
+- Git中的命令：
+    - --global 表示对这台机器上所有的Git仓库都会使用这个配置
+    - git init 初始化已经创建好的当前文件夹
+    - git add <file> 添加(多个)文件
+    - git commit -m <message> 提交至版本控制系统
+    - git status 告诉你有文件被修改过
+    - git diff 可以查看修改内容
+    - git reset --hard <commit_id> 允许我们在版本之间穿梭
+
+        - 对于历史记录，<commit_id>可以替换成HEAD^, HEAD^^, ... HEAD~100
+        - <commit_id>只需要前面几位
+    - git log [--pretty=oneline] 可以查看提交历史[只显示一行信息]
+    - git reflog 查看命令历史
+    - git checkout -- <file> 丢弃工作区的修改
+        - git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+    - git reset HEAD <file> 将文件从暂存区回退到工作区
+    - git rm <file> 用于删除一个文件，版本区、暂存区和工作区都没了，也就是“一键全删”。
+
+- 所有的版本控制系统，其实只能跟踪文本文件的改动，比如TXT文件，网页，所有的程序代码等等，Git也不例外。
+    - Microsoft的Word格式是二进制格式，因此，版本控制系统是没法跟踪Word文件的改动的。
+- Git的工作区
+
+    - stage表示暂存区，git add把文件修改添加到暂存区；git commit把暂存区的所有内容提交到当前分支
+
+    - 工作区就是本地文件系统
+- Git的本质有点：跟踪并管理的是修改，而非文件
+- Git——远程仓库
+    - git remote add origin git@server-name:path/repo-name.git 用于关联一个远程Git仓库
+        - GitHub可以用那个https://github.com/path/repo-name.git 来代替 git@github.com:path/repo-name.git
+
+        - 添加后，origin就是远程仓库的名字，这是Git默认的叫法，也可以改成别的。
+    - git push -u origin master 第一次推送master分支的所有内容
+        - -u表示Git不但会把本地的master分支内容推送到远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者获取时就可以简化命令——去掉-u。
+
+        - 下次 git push origin master
+            - origin是远程仓库的名字
+    - git clone git@server-name:path/repo-name.git 可以将远程仓库克隆到当前文件夹
+
+        - 实际上，Git支持多种协议，默认的git@使用ssh协议，但也可以用https等其他协议
+
+        - 通过ssh支持的原生git协议速度最快。
+- Git——分支管理
+    - git branck 查看分支
+    - git checkout -b <name> 创建并切换分支
+        - git branch <name> 创建分支
+        - git checkout <name> 切换分支
+    - git merge <name> 合并某分支到当前分支
+    - git branch -d <name> 删除分支
+
+    - 如果一个branch改动后，master也改动了，那么再进行git merge到master的时候会发生冲突，需手动解决。
+
+        - 手动解决就是：观察Git在冲突文件中提供的信息，自行修改后，再次add和commit
+        - git log --graph命令可以看到分支合并图
+            - git log --graph --pretty=oneline --abbrev-commit
+
+    - 之前介绍的合并分支策略是Fast forward模式
+
+        - 即创建并切换到分支dev，修改并提交dev后，切换回master并执行merge操作，最后删除dev分支
+
+        - 但是在这种模式下，删除分支后，会丢掉分支信息。
+
+        - 如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
+
+            - 这样可以看到分支的commit_id和“分支线”
+        - git merge -no-ff -m <message> <branch_name> 表示禁用Fast forward模式下合并分支
+            - --no-ff表示禁用Fast forward
+
+            - 因为本次合并要创建一个新的commit，所以加上-m参数，把commit藐视写进去
+
+    - 修复bug时，我们会通过创建新的bug分支进行修复，然后进行合并，最后删除。但是在此期间，可能需要应付当前未完成的工作分支
+        - git stash 可以储存当前的工作现场
+
+            - 储存之后，工作区就干净了
+        - git stash apply 恢复储存的工作现场
+            - git stash apply stash@{0} 恢复指定的stash
+            - git stash list 查看所有的stash
+        - git stash drop 删除储存的stash
+        - git stash pop 恢复并删除stash
+
+    - 多人协作
+
+        - 多人协作的模式通常是这样的：
+
+            - 首先，可以试图用git push origin branch-name 推送自己的修改
+
+            - 如果推送失败，则是因为远程分支较你的本地待推送分支有更新，需要先用git pull试图合并
+                - git pull命令失败，提示“no tracking information”的原因是本地分支与远程分支的链接没有指定
+
+                    - 设置本地分支与远程分支的链接：git branch --set-upstream-to=origin/<branch> <branch-name>
+
+                    - 或者不指定链接：git pull <remote> <branch>
+
+                - 合并是在本地
+
+            - 如果合并有冲突，则解决冲突，并在本地提交
+
+            - 没有冲突或者解决冲突后，再用git push origin branch-name推送就能成功
+        - git remote 查看远程库名
+            - git remote -v 查看远程库信息
+            - git branch-r 查看远程库分支
+            - git branch -a 查看本地库和远程库的分支
+        - git checkout -b branch-name origin/branch 表示在本地创建和远程分支对应的分支
+
+            - 本地和远程分支的名称最好一致
+
+- 标签管理
+
+    - 创建标签
+        - git tag v1.0 表示为当前分支最新提交的commit，打上一个名为v1.0的标签
+            - git tag v0.9 commit-id 表示为commit-id为...的，打上名为v0.9的标签
+            - git tag -a <tagname> -m "blablabla..." 可以指定标签信息
+            - git tag -s <tagname> -m "blablabla..." 可以用PGP签名标签
+        - git tag 查看所有标签
+            - git show <tagname> 查看标签详细信息
+
+    - 操作标签
+        - git push origin <tagname> 可以推送一个本地标签
+        - git push origin --tags 可以推送全部未推送过的本地标签
+        - git tag -d <tagname> 可以删除一个本地标签
+        - git push origin :refs/tags/<tagname> 可以删除一个远程标签
+
+- 使用GitHub
+
+    - 在GitHub上，可以任意Fork开源仓库库
+
+    - 自己拥有Fork后的仓库的读写权限
+
+    - 可以推送pull request给官方仓库来贡献代码
