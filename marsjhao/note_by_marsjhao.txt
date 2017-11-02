@@ -1,0 +1,30 @@
+		多亏了廖老师的教程，在很短的时间内就能够熟悉Git的常用指令和操作，再次表示感谢！
+
+0. $ git config --global user.name "Your Name"，$ git config --global user.email "email@example.com"。
+1. 初始化一个Git仓库，使用git init命令。
+2. 添加文件到Git仓库，分两步：第一步，使用命令git add <file>，注意，可反复多次使用，添加多个文件；第二步，使用命令git commit -m "说明"，完成。
+3. 要随时掌握工作区的状态，使用git status命令。
+4. 如果git status告诉你有文件被修改过，用git diff可以查看修改内容。
+5. HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset --hard commit_id。
+6. 用git log可以查看提交历史，以便确定要回退到哪个版本。觉得显示太乱，可以试试加上--pretty=oneline参数。如果因为log信息太长单屏无法显示全，此时使用q键进行退出查看即可。
+7. 要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。
+8. 用git diff HEAD -- readme.txt命令可以查看工作区和版本库里面最新版本的区别。
+9. 当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+10. 当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+11. 如果要从版本库中删除某文件，那就用命令git rm删掉，并且git commit。
+12. 要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；关联后，使用命令git push -u origin master第一次推送master分支的所有内容；此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改。
+13. 要克隆一个仓库，首先必须知道仓库的地址，然后使用git clone命令克隆。Git支持多种协议，包括https，但通过ssh支持的原生git协议速度最快。
+14. 查看分支：git branch；创建分支：git branch <name>；切换分支：git checkout <name>；创建+切换分支：git checkout -b <name>；将分支name合并某分支到当前分支：git merge <name>；删除分支：git branch -d <name>；如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+15. 用git log --graph命令可以看到分支合并图：$ git log --graph --pretty=oneline --abbrev-commit。
+16. 合并dev分支时，请注意--no-ff参数，表示禁用Fast forward：$ git merge --no-ff -m "merge with no-ff" dev。本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。
+17. 修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场。
+18. 查看远程库信息，使用git remote -v。
+19. 本地新建的分支如果不推送到远程，对其他人就是不可见的。
+从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+20. 命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id在标签名后面。命令git tag可以查看所有标签。可以用git show <tagname>查看标签信息。
+21. 命令git push origin <tagname>可以推送一个本地标签；命令git push origin --tags可以推送全部未推送过的本地标签；
+22. 命令git tag -d <tagname>可以删除一个本地标签；命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
+23. 在GitHub上，可以任意Fork开源仓库；自己拥有Fork后的仓库的读写权限；可以推送pull request给官方仓库来贡献代码。
