@@ -1,0 +1,64 @@
+感谢廖老师的讲解，很多不懂的地方评论区都指出来了，感觉学到了很多东西，谢谢！
+
+
+git init创建仓库
+git add 添加文件
+git commit -m “更新信息”
+git log 最初版本到当前版本日志
+git reflog所有版本日志
+gitk 图形界面所有版本日志
+git checkout [commit_id] -- [file_name] 指定
+git diff    #是工作区(work dict)和暂存区(stage)的比较
+git diff --cached    #是暂存区(stage)和分支(master)的比较
+工作区(所在的超市)   暂存区stage(购物车的东西)   master(所有超市买的东西)
+git rm 删除文件
+git remote add origin git@github.com.. 添加远程库
+ssh -keygen -t rsa -C “1172426418@qq.com” 生成SSH key
+git checkout 切换分支
+git checkout -b 创建并切换分支
+git branch -d 删除分支 
+git branch -D 强制删除分支
+git pull：相当于是从远程获取最新版本并merge到本地
+git pull origin master
+上述命令其实相当于git fetch 和 git merge
+在实际使用中，git fetch更安全一些，因为在merge前，我们可以查看更新情况，然后再决定是否合并。
+
+在github上创建仓库：
+Create a new repository on the command line
+
+
+touch README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/BrentHuang/MyRepo.git
+git push -u origin master
+
+
+在本地新建一个分支： git branch Branch1
+切换到你的新分支: git checkout Branch1
+将新分支发布在github上： git push origin Branch1
+在本地删除一个分支： git branch -d Branch1
+在github远程端删除一个分支： git push origin :Branch1   (分支名前的冒号代表删除)
+
+直接使用git pull和git push的设置
+git branch --set-upstream-to=origin/master master 
+git branch --set-upstream-to=origin/ThirdParty ThirdParty
+git config --global push.default matching
+
+推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
+
+$ git push origin master
+如果要推送其他分支，比如dev，就改成：
+
+$ git push origin dev
+
+为什么commit id需要用这么一大串数字表示呢？因为Git是分布式的版本控制系统，
+后面我们还要研究多人在同一个版本库里工作，如果大家都用1，2，3……作为版本号，那肯定就冲突了。
+
+而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件
+每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道。
+
+本地项目推送到线上空库中应保证空库中的文件都在本地，如readme文件
+git pull --rebase origin master获取readme文件
+然后在推送 push
