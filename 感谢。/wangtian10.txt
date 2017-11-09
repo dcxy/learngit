@@ -1,0 +1,6 @@
+1.创建版本库时出现：
+ fatal:pathspec'readme'did not match any files
+ 解决：通过git命令创建touch readme.txt.
+ 2.输入commit... 时出现
+ fatal：Not a git repository (or any of the parent directories)
+ 解决：需要在有readme.txt界面下右击，点git bash,在开始后面一系列操作。
