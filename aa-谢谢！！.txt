@@ -1,0 +1,2 @@
+谢谢廖老师的git教程，花了一天的时间算是入门了。
+就是设置ssh的时候一直显示Permission denied（Publickey），一直解决不了，不得以才用HTTPS
