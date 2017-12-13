@@ -1,0 +1,119 @@
+Git
+集中式版本控制系统:版本库是集中放在中央服务器的,干活时先从服务器获得最新的版本,干完活之后再推送到中央服务器.类似于图书馆,先从图书馆借书,修改完之后再送回去
+缺点:必须联网才能工作,如果中央服务器出现了问题,所有人都不能进行获得和推送了
+分布式版本控制系统:分布式版本控制系统通常也会有一台类似于"中央服务器"的电脑,但是这台电脑有问题只是使交换修改不方便,但依旧可以进行
+下载git.exe安装完成之后
+
+使用cd等命令到指定的文件夹下
+
+mkdir learngit命令 新建一个learngit的文件夹
+cd learngit 移动到learngit文件夹下
+pwd 显示当前目录
+git init 初始化git  会生成一个隐藏的git文件夹
+如果看不到 用ls -ah显示文件夹
+git add 把文件添加到仓库
+git commit 把文件提交到仓库 -m指的是本次提交的备注
+可以多次add之后使用一次commit提交
+git status 查看仓库当前的状态
+
+git diff 查看文件新旧的区别
+
+git log查看提交文件的日志
+
+包含日期 用户信息 提交备注 注意:日志是从新到旧的顺序排列
+加上参数--pretty=oneline 只显示版本号和备注
+
+回滚:在git中使用HEAD表示当前版本,也就是最新提交的记录,上个版本就是HEAD^,上上个版本就是HEAD^^,依次类推,不过网上版本太多这种形式不方便,所以可以采用 HEAD~100表示往上一百个版本
+HEAD~1 = HEAD^
+git reset表示回滚 --hard为参数 后面加回滚的版本
+cat表示预览文件 后面加当前目录下的文件名 这个操作一般只用于txt
+
+不过这个时候再使用status查看发现最新的版本已经没了,如果想回滚到最新的版本怎么办?
+git reset表示回滚 --hard为参数 后面加对应版本的版本号
+如果不知道最新版本的版本号怎么办?
+git reflog可以展示每一次命令
+
+
+我们使用的文件夹叫工作区
+工作区下有一个隐藏.git目录被称为版本库,其中有一个文件名字为stage或者index的文件,成为暂存区
+add命令实际上就是把要提交的所有修改放到暂存区 commit把暂存区的所有修改提交
+提交之后,如果对工作区没有任何修改,那么暂存区就是空的,工作区就是"干净"的
+git checkout --file 可以丢弃工作区的更改 
+如果文件修改后还没有放到暂存区,现在就变成了和版本库一样的状态 如果改文件已经添加到了暂存区,那么就会变成和暂存区一样的状态 也就是回到最近一次add或commit的状态
+
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+
+场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+git rm 删除文件,与新增和修改一样,之后需要commit提交
+
+
+在系统用户主目录下有没有.ssh文件夹 下面有没有id_rsa和id_rsa.pub两个文件  
+如果没有的话
+ssh-keygen -t rsa -C "youremail@example.com"
+
+git clone 版本库地址 作用是从仓库复制一个到本地
+git checkout -b dev   checkout -b 表示创建并切换 与下面两条命令内容相同
+git branch dev
+git checkout dev
+
+git branch 查看当前分支
+
+git merge命令用于合并指定分支到当前分支
+git branch -d dev 删除对应分支
+
+分支管理
+分支管理的实际作用:多人开发项目时,如果你开发一个新功能需要一个月,第一周写了四分之一的代码,如果提交则会导致其他人无法工作,不提交会有可能丢失数据,则可以使用分支,创建一个只属于自己的分支,在自己的分支想提交就提交,开发完毕之后再合并到原来的分支上,这个功能svn也有,但是git的速度比svn要快的多
+
+不同分支合并的时候有可能会出现冲突
+
+需要修改后重新提交
+git log --graph --pretty=oneline --abbrev-commit 可以查看分支的合并情况
+--abbrev-commit 表示提交校验码缩写,也就是黄色的部分
+--pretty=oneline 表示一行显示,日期与作者不显示
+ --graph 表示包括分支合并图
+
+解决完冲突记得删除分支
+
+日常master分支应该是非常稳定的,也就是只用于发布版本,平时不在上面工作
+各个员工在dev的分支上干活,也就是每个人有自己的分支,时长合并到dev分支,版本发布的时候再把dev分支合并到master分支上
+合并时 加上--no-ff的参数是普通模式合并,合并之后有历史,可以看出来做过合并,而不加参数的fast forward合并就看不出做过合并
+如果有这样一个情况,临时有一个bug需要解决,但是正在dev分支上的工作还没有提交,因为工作进行到一半,这个时候可以:
+git stash用于把当前状态储藏起来,之后根据需要恢复之后再进行工作
+现在用git status查看,工作区是干净的
+
+然后在存在bug的分支上创建临时分支,修改完之后进行合并,然后删除临时分支
+
+
+
+回到开发分支,
+使用git stash list可以查看stash列表
+恢复有两种办法:
+1.用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除
+2是用git stash pop，恢复的同时把stash内容也删了
+有多个stash时,可以加上对应的参数,例如stash@{0}
+
+
+查看远程库信息，使用git remote -v；
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+
+多人协作的工作模式通常是这样：
+  6. 首先，可以试图用git push origin branch-name推送自己的修改；
+  8. 如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+  10. 如果合并有冲突，则解决冲突，并在本地提交；
+  12. 没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+这就是多人协作的工作模式，一旦熟悉了，就非常简单
+在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+git tag -a <tagname> -m "blablabla..."可以指定标签信息；
+git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
+命令git tag可以查看所有标签。
+
+命令git push origin <tagname>可以推送一个本地标签；
+命令git push origin --tags可以推送全部未推送过的本地标签；
+命令git tag -d <tagname>可以删除一个本地标签；
+命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
