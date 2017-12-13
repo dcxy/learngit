@@ -1,0 +1,18 @@
+#创建版本库:
+    mkdir learngit
+    cd learngit
+    pwd(显示当前目录)
+初始化版本库:
+    git init(工作区产生用以追踪版本库的.git文件)
+    git add filename
+    git commit -m "describe the commit"
+版本退回:
+1.git status用以查看工作区的状态
+2.git diff用以查看具体的修改的内容
+    HEAD指向当前版本,git reset --hard commit_id回退版本
+    向前用git log，向后用git reflog查看有关提交的信息
+3.git checkout --file用来丢弃工作区的修改
+4.git reset HEAD file撤销暂存区的修改
+5.如果已经提交了，先是版本回退，然后参考步骤3.4.即可，前提是还没到远程库
+6.删除文件 git rm filename,如果删错了可以用git checkout filename恢复原来的文件
+
