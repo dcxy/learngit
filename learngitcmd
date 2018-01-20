@@ -1,0 +1,38 @@
+
+git init 用于将一个目录初始化为git目录
+git status 查看状态
+git add FILE 添加文件（或者理解为更改）到暂存区
+git commit [-m ‘balabala’] 将暂存区的更改提交到版本库
+git log [--graph --pretty=oneline --abbrev-commit] 显示版本库的日志。[图形显示和单行显示]
+git reset --hard HEAD^(or id) 将版本库和工作区回档到某一个版本，并将暂存区清空
+git reflog 历史日志记录
+git checkout -- FILE 清空对选中文件工作区的修改，如果暂存区有内容，使之回档为暂存区，否则回档为版本库的最新版本）
+git reset HEAD FILE 清空暂存区
+git rm FILE 添加一个删除文件的更改到暂存区
+
+git branch 查看分支
+git checkout BRANCH 检出到某个分支
+git branch BRANCH 创建一个新分支
+git checkout -b BRANCH 创建一个新分支并检出到该分支
+git merge BRANCH合并分支到当前分支
+git merge --no-ff -m "merge with no-ff" BRANCH 非Fast forward模式下合并分支
+git branch -d BRANCH 删除分支（-D强行删除）
+
+git stash 储存当前的工作区
+git stash list 显示所有的stash
+git stash drop [stash@{0}] 删除（第几个）stash
+git stash apply [stash@{0}] 工作区恢复到（第几个）stash
+git stash pop 恢复到最新的stash并将其删除
+
+git diff 显示暂存区和文件本身的区别
+git diff –staged 显示暂存区和版本库的区别
+git diff id1 id2 显示两个版本的区别有哪些
+
+git clone git@url:git-dir从远程克隆到本地
+git checkout -b BRANCH origin/BRANCH 创建远程的分支到本地 
+git remote add origin git@url:git-dir 连接远程仓库
+git remote -v 显示远程版本库的信息
+git push -u origin BRANCH 将本地推向远程
+git pull origin BRANCH 将远程更新合并到本地，如果有冲突就在本地解决冲突
+git branch --set-upstream BRANCH origin/BRANCH创建本地分支和远程分支的链接
+git fetch origin 将远程更新到本地并创建新的分支
