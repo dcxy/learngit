@@ -1,0 +1,166 @@
+﻿感谢廖老师的教程！
+https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
+
+git版本管理：
+mkdir 文件夹					                                   		// 创建文件夹
+cd 文件夹					                                   	   		// 进入文件夹
+pwd						                                           		// 显示当前目录
+git init					                                   	    		// 把这个目录变成git可以管理的仓库
+
+git status					                                    	    		// 查看是否还有文件未提交
+git add 文件名.txt				                                    		// 添加文件到暂存区
+git commit -m "注释"				                                    		// 把暂存区的文件提交到仓库
+
+git diff 文件名.txt				                                    		// 查看文件修改的内容
+cat 文件名.txt					                                   		// 查看文件内容
+
+git reflog					                                   	    		// 查看全部版本
+git log						                                    		// 查看版本历史记录
+git log --pretty=oneline			                            	    		// 查看精简版本历史记录
+git reset --hard HEAD^				                            		// 退回到上一个版本
+git reset --hard HEAD~100			                            		// 退回到上100个版本
+git reset --hard scd51f				                           		// 退回到某版本
+
+git reset HEAD .							   	    		// 撤销add
+echo 内容 >> 文件名.txt				                           		// 创建或更改文件的内容
+git rm 文件名.txt				                                   		// 删除文件
+git checkout -- 文件名.txt                                       		   		// 撤销修改文件内容 或 撤销删除文件
+
+git branch					                                   		// 查看分支 *代表当前分支
+git branch dev					                                   		// 创建分支
+git branch -d dev                                               		   		// 删除分支
+git checkout dev				                                   		// 切换分支
+git checkout -b dev				                                   		// 创建并切换分支
+git merge dev					                                   		// 在当前分支上合并dev内容
+git merge –no-ff  -m “注释” dev		                           		// 合并分支，禁用‘Fast forward’模式，删除后还能保留分支信息
+git log --graph --pretty=oneline --abbrev-commit	           		// 查询被删除的分支信息
+git stash                                                       			   		// 将当前的工作现场隐藏起来
+git stash list                                                  			   		// 查看隐藏的工作现场
+git stash apply                                                 		   		// 恢复工作现场
+git stash drop                                                 		       	   		// 删除隐藏的一条工作现场记录
+git stash pop                                                  	 		   		// 恢复并删除
+
+git clone git@github.com:webjimmylau/testgit.git                		// 克隆testgit项目
+git remote add origin git@github.com:webjimmylau/testgit.git    	// 关联一个远程库
+git pull origin master                                          				// 拉取成功 然后手动处理冲突
+git branch --set-upstream master                                			// 解决分支冲突
+git push -u origin master			                            			// 把本地master分支和远程master分支关联起来，并把本地master分支的最新修改推送到github上
+git push origin master				                            		// 把本地master分支的最新修改推送到github上
+git push origin :dev                                            				// 在远程分支上删除dev分支
+git remote                                                      					// 查看远程库的信息 如：origin
+git remote -v                                                   					// 查看远程库的详细信息 如：origin git@github.com:webjimmylau/testgit.git (fetch) origin git...git (push)
+
+1、创建/修改/提交
+cd D:						                                   		// 进入D盘
+mkdir www					                                   		// 创建文件夹www
+cd www						                                   		// 进入文件夹www
+mkdir testgit					                                   		// 创建文件夹testgit
+cd testgit					                                    	   		// 进入文件夹testgit
+pwd						                                           		// 显示当前目录
+git init					                                    	   		// 把这个目录变成git可以管理的仓库
+echo 11111111 >> readme.txt			                           		// 创建readme.txt文件 并添加内容11111111
+git add readme.txt				                                   		// 添加readme.txt文件到暂存区里面去
+git commit -m "readme.txt提交"			                   		// 把暂存区的文件提交到仓库
+git status					                                    	   		// 查看是否还有文件未提交
+echo 22222222 >> readme.txt			                           		// 如果没有readme.txt文件，则创建，如果有，直接在文件新增22222222内容
+git status					                                    	   		// 查看是否还有文件未提交
+git diff readme.txt				                                   		// 查看readme.txt修改了什么内容
+git add readme.txt				                                   		// 添加readme.txt文件到暂存区里面去
+git commit -m "readme.txt新增内容"		                           		// 把暂存区里面的内容提交到仓库
+
+2、版本回退
+echo 33333333 >> readme.txt				
+git add readme.txt				
+git commit -m "readme修改内容"
+git log						                                   		// 查看版本历史记录
+git log --pretty=oneline			                            	   		// 查看精简版本历史记录
+git reset --hard HEAD^				                           		// 退回到上一个版本	^上一个 ^^上两个 ~100上100个
+cat readme.txt					                                   		// 查看readme.txt内容
+git log						                                   		// 查看版本历史记录，被覆盖的最新版本33333333已经看不到		q退出查询
+git reflog					                                    	   		// 可以看到33333333内容的版本信息和对应的版本号
+git reset --hard 具体版本号			                           		// 恢复到33333333内容的版本
+cat readme.txt					                                   		// 查看readme.txt内容
+
+3、理解工作区与暂存区的区别
+echo 44444444 >> readme.txt			                           		// 修改文件
+echo test >> test.txt				                            	   		// 新增文件
+git add readme.txt				                                   		// 添加文件到暂存区
+git add test.txt				                                	   		// 添加文件到暂存区
+git commit -m "提交全部文件"			                           		// 把暂存区的文件提交到仓库
+
+4、撤销修改
+echo 5555555 >> readme.txt			                           		// 修改文件
+cat readme.txt					                                   		// 查看文件
+git checkout -- readme.txt			                           		// 把文件在工作区做的修改全部撤销
+git 66666666 >> readme.txt			                           		// 修改文件
+git add readme.txt				                                   		// 添加文件到暂存区
+echo 77777777 >> readme.txt			                           		// 修改文件
+cat readme.txt					                                   		// 查看文件
+git checkout -- readme.txt			                           		// 把文件暂存区的修改保留，把工作区为修改全部撤销
+cat readme.txt					                                   		// 66666666还有，77777777不见了
+
+5、删除文件
+echo b >> b.txt					                                   		// 新建文件
+git add b.txt					                                   		// 添加文件到暂存区
+git commit -m "提交b.txt文件"			                           		// 提交暂存区的文件到仓库
+rm b.txt					                                    	   		// 删除文件
+git status					                                    	   		// 查看文件状态
+git checkout -- b.txt				                            	   		// 撤销删除文件
+
+6、远程仓库
+如何添加远程库
+git remote add origin git@github.com:webjimmylau/testgit.git    	// 关联一个远程库
+git push -u origin master			                            			// 把本地master分支和远程master分支关联起来，并把本地master分支的最新修改推送到github上
+git push origin master				                            		// 把本地master分支的最新修改推送到github上
+如何从远程克隆
+git clone git@github.com:webjimmylau/testgit.git
+
+7、创建与合并分支
+git branch					                                   		// 查看分支 *代表当前分支
+git branch dev					                                   		// 创建分支
+git checkout dev				                                   		// 切换分支
+git checkout -b dev				                                   		// 创建并切换分支
+cat readme.txt
+echo 77777777 >> readme.txt
+cat readme.txt
+git add readme.txt
+git commit -m 'dev分支上增加内容777...'
+git checkout master
+cat readme.txt					                                   		// 只有之前的内容666
+git merge dev					                                   		// 在当前分支上合并dev内容
+cat readme.txt					                                   		// master上多了内容777
+git branch -d dev				                                   		// 删除dev分支
+如何解决冲突
+git merge fenzhi1				                                   		// 删除冲突，再提交
+分支管理策略 
+git merge –no-ff  -m “注释” dev		                           		// 合并分支，禁用‘Fast forward’模式，删除后还能保留分支信息
+git branch -d dev			
+git log --graph --pretty=oneline --abbrev-commit	           		// 查询被删除的分支信息
+
+8、bug分支
+git status                                                      			   		// 有看到新增和修改的文件
+git stash                                                       			   		// 将当前的工作现场隐藏起来
+git status                                                      			   		// 隐藏之后，查看状态，是干净的
+git checkout -b issue-404                                       		   		// 创建和切换分支到issue-404
+git add readme.txt                                              		   		// 把文件添加到暂存区
+git commit -m 'fix some bug'                                    		   		// 把暂存区的文件提交到仓库
+git checkout master                                             		   		// 切换分支到master
+git merge --no-ff -m 'merge issue-404' issue-404               		// 合并issue-404分支
+cat readme.txt                                                  		   		// 当前master分支可以看到issue-404分支的内容，完全一致
+git branch -d issue-404                                         		   		// 在master分支上删除issue-404临时分支
+git checkout dev                                                		   		// 切换到dev分支
+git status                                                      			   		// 查看状态，还是干净的
+git stash list                                                  			   		// 查看隐藏的工作现场
+git stash apply                                                 		   		// 恢复工作现场
+git stash drop                                                  			   		// 删除隐藏的一条工作现场记录
+git stash pop                                                   			   		// 恢复并删除
+
+9、多人协作
+git clone git@github/com:webjimmylau/testgit.git                		// 克隆testgit项目
+git pull origin master                                          		   		// 拉取master分支
+git push origin master                                          		   		// 推送master分支
+git pull origin dev                                             		   		// 拉取失败
+git branch --set-upstream dev                                   	   		// 解决分支冲突
+git pull origin dev                                             		   		// 拉取成功 然后手动处理冲突
+git push origin dev                                             		   		// 推送dev分支
+
