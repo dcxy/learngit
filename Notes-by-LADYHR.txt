@@ -1,0 +1,115 @@
+#分布式
+分布式版本控制系统没有“中央服务器”，每个人都有一个完整的版本库，不必联网使用，即使个人的版本损坏，从别人哪里copy一份即可。
+
+#Git常用命令
+- 识别用户
+`git config --user.name LADYHR`
+`git config --user.email ladyhr@outlook.com`
+- 创建版本库
+`git init`
+- 显示隐藏文件夹
+`ls -ah`
+- 添加文件
+`git add readme.txt`
+- 提交文件到仓库
+`git commit -m "wrote a readme file"`
+- 查看git状态
+`git status`
+- 查看git变动的地方(工作区和暂存区的区别)
+`git diff`
+- 查看历史记录
+`git log`
+`git log --pretty=oneline`
+- 版本回退
+`git reset --hard HEAD^` #回退到上个版本
+`git reset --hard HEAD^^` #回退到上上个版本
+`git reset --hard HEAD~100` #回退到100个之前的版本
+- 查看txt文件内容
+`cat readme.txt`
+- 查看命令历史
+`git reflog`
+- 查看工作区和版本库最新版本的区别
+`git diff HEAD -- readme.txt`
+-查看暂存区和版本库的区别
+`git diff -- cached`
+- 撤销工作区的修改
+`git checkout -- readme.txt`
+- 撤销暂存区的修改
+`git reset HEAD readme.txt`
+- 删除文件
+`rm test.txt`
+`git rm test.txt`
+
+
+#Git为什么要用Markdown格式写readme
+因为所有的版本控制系统都只能跟踪文本文件的改动，比如：TXT、网页、代码，而图片、视频、word都为二进制文件，无法跟踪变动。可使用Notepad++编辑文本文件。
+
+#Git的版本回退原理
+Git内部有一个指向当前版本的指针HEAD，版本回退只是改变了指针的位置，顺便更新工作区的文件。
+
+#Git添加远程库
+1. 在使用的某台电脑上添加SSH key
+- Git bash `ssh-keygen -t rsa -C ladyhr@outlook.com`
+- 复制id_rsa.pub文件的内容，登录GitHub添加SSH key
+2. 测试链接是否正常
+`ssh -T git@github.com`
+3. GitHub上建立新的仓库LearnGit，并把本地仓库与之关联
+在本地仓库下运行命令：
+`git remote add origin git@github.com:LADYHR/LearnGit.git`
+4. 推送本地库到远程
+第一次：`git push -u origin master`
+之后：`git push origin master`
+
+#从远程库克隆
+1. GitHub上创建仓库
+2. 先`cd LADYHR`
+`git clone git@github.com:LADYHR/GitSkills.git`
+GitHub的地址也可以用https://github.com/LADYHR/GitSkills.git
+
+#创建合并分支
+- 创建分支`git branch dev`
+- 切换分支`git checkout dev`
+- 创建并切换分支`git chekout -b dev`
+- 查看现有分支`git branch`
+...add、commit...
+- 合并某分支到当前分支`git merge dev`
+- 不使用Fast Foward进行合并（可在历史信息中看到曾经做过分支合并）
+`git merge --no-ff -m "merge with no-ff" dev`
+- 删除合并过的分支`git branch -d dev`
+- 删除未经合并的分支`git branch -D dev2`
+
+#解决冲突
+当两个分支有冲突时需要手动改正，重新add、commit完成合并。
+查看分支合并情况`git log --graph --pretty=oneline --abbrev-commit`
+
+#修复bug
+通过创建新的bug分支来修复bug，然后合并并删除分支。当手头工作没有完成时通过
+`git stash`
+命令来对工作现场进行存储，修复bug之后再通过
+`git stash pop`
+命令还原工作现场继续完成工作。
+
+#多人协作
+只有主分支master和共同开发的分支dev需要与远程同步，其他，例如：bug分支、feature分支都不需要与远程同步。
+- 查看远程库信息
+`git remote -v`
+- 在本地创建和远程分支对应的分支
+`git checkout -b dev origin/dev`
+- 创建本地分支和远程分支的链接关系
+`git branch --set-upstream dev origin/dev`
+- 推送本地分支到远程分支
+`git push origin master/dev`
+- 抓取远程分支到本地进行合并，若有冲突需要先处理
+`git pull `
+
+#标签
+- 创建标签
+`git tag v1.0`默认为HEAD，可以指定commit id`git tag v0.9 <commit id>`
+- 指定标签信息
+`git tag -a v0.8 -m "version 0.8 released"`
+- 推送本地标签到远程
+`git push origin v1.0`或推送所有标签`git push origin --tags`
+- 删除标签
+`git tag -d v1.0`
+- 删除远程标签
+先删除本地标签，再`git push origin :refs/tags/v0.9`
