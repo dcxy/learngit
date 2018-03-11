@@ -181,3 +181,6 @@ git remote add gitee git@gitee.com:mikasama/gitskills.git  关联码云远程库
 git remote add github git@gitee.com:mikasama/gitskills.git  关联GitHub远程库，别名为github
 git push gitee master 将master分支推送到码云
 git push github master 将master分支推送到github
+
+
+注意：连接多个远程库之后，git pull 是无法拉取，需要加上远程库名，如：git pull gitee master
