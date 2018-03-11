@@ -1,0 +1,125 @@
+Git 的教程：
+一：git的基础操作--提交，发布
+	 创建一个本地版本库： git init
+	 添加一个文件： git add
+	 提交一个文件到本地版本库： git commit -m 描述信息
+	 查看目前文档的状态： git status
+	 在add前查看修改的内容： git diff 文件名
+	 查看提交的日志： git log
+	 查看命令的历史： git reflog
+二：git的版本控制
+	 git的当前版本是HEAD，回到前一个版本是： git reset --hard HEAD^
+	 git回到任意版本是： git reset --hard commit——id
+	 放弃未add的版本： git checkout -- file
+	 一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+	 
+	 种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态
+	 
+	 场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+
+	 场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+
+	 场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+	 
+	 查看远程库的信息： git remote -v
+	 
+	 删除： 如果在工作区删除了一个文件
+	   1. 如果你确定要删除，那使用 git rm file 从版本库中删除，并且commit
+	   2. 如果你是误删，则需要从版本库中恢复文件：  git checkout -- file
+   
+   
+ 三：连接远程仓库：
+   1. 生成密钥：ssh-keygen -t rsa -C "18500524969@qq.com"，在用户目录下可以找到这个文件。
+   2. 注册github账号，把密钥添加到gitHub
+   3. 连接远程数据库
+      1. 未创建本地仓库
+	    echo "# learngit" >> README.md
+		git init
+		git add README.md
+		git commit -m "first commit"
+		git remote add origin https://github.com/jiangerOne/learngit.git
+		git push -u origin master
+	  2. 如果已经创建本地仓库
+	    git remote add origin https://github.com/jiangerOne/learngit.git
+        git push -u origin master
+   4. 从远程库克隆
+        git clone git@github.com:jiangerOne/javaProject.git
+四：分支操作：
+    1. 分支的基本操作: 某个分支的操作不会对其他分支的数据进行影响，如果要同步，则需要合并分支
+	    查看当前的分支： git branch
+		创建一个新的分支： git branch dev
+		切换到dev：       git checkout dev
+		git checkout -b dev = git branch+git checkout dev
+		合并某分支到当前分支：git merge dev
+		删除分支： git branch -d dev
+	2. 分支冲突：
+	   当一个分支提交了改变的内容，另一个分支也提交了改变了相同行的内容时，分支合并会冲突。
+	   解决方案：首先解决冲突，可以使用git log --graph.
+    3. 分支策略
+	      合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，
+		  能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
+		在实际开发中，我们应该按照几个基本原则进行分支管理：
+		1. 首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+		2. 那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，
+		   比如v10版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
+		3. 你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。
+		4.合并分支时，主分支不要提交，要合并
+	4. 创建bug分支：
+       1. 当你在dev上工作时，你突然发现一个bug，但是dev的工作还没有做完，你需要保存dev的环境
+          跑到master创建bug分支，修复bug
+          1. 保存dev的当时状态：git stash
+          2. 切换到master分支上创建bug分支： 
+               git checkout master
+               git checkout -b bug--01
+          3. 修复完bug，合并bug分支，删除bug分支
+               git merge bug--01		  
+               git branch -d bug--01
+		  4. 回到dev,查看stash,删除stash,继续开始工作
+		        checkout dev 
+				git stash list
+				git stash apply恢复
+				git stash pop 恢复，删除
+	5. 强行删除未合并的新分支： 开发一个新feature，最好新建一个分支；
+       如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+	6. 多人合作：
+	     但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？
+
+		master分支是主分支，因此要时刻与远程同步；
+
+		dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+
+		bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+
+		feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+		
+	7. 多人合作分支：
+	   
+	   查看远程库信息，使用git remote -v；
+		本地新建的分支如果不推送到远程，对其他人就是不可见的；
+
+		从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+
+		在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+
+		建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+		从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+五：标签管理：
+    1. 标签的主要作用是更好的标识版本
+	2. 创建一个标签
+	    命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+
+		git tag -a <tagname> -m "blablabla..."可以指定标签信息；
+
+		git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
+
+		命令git tag可以查看所有标签。
+		git show tag 可以查看tag的信息
+	3. 删除一个标签：
+	    命令git push origin <tagname>可以推送一个本地标签；
+
+		命令git push origin --tags可以推送全部未推送过的本地标签；
+
+		命令git tag -d <tagname>可以删除一个本地标签；
+
+		命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
