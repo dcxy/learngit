@@ -1,0 +1,101 @@
+本地文件目录是我们代码编辑的工作区  ，本地 git 仓库 中 为为 暂存区  和 仓库
+
+我们会在 工作区 内编辑内容  然后  通过 add 将 工作区的 内容  添加到 暂存区  最后 通过 commit  提交到 本地的 git 仓库 
+
+具体的流程是   工作区  =>  暂存区   => git仓库
+
+git init  					初始化git仓库
+
+git add  <name>					添加文件到缓存区（单个文件）
+
+git add .					将工作区中的所有变化提交到暂存区（不包括被删除的文件）
+
+git add -u					仅监控git仓库中已经存在的文件，会将文件提交到暂缓区，不会提交新文件
+
+git add -A					(git add -.  ) 和 (git add -A) 两个功能的集合, (git add -ALL的缩写)（会提交所有变化）
+
+git commit -m ‘wrote a readme file’  		添加文件到git仓库   -m ( 表示本次提交的注释说明)
+
+git status					查看git仓库中的文件状态
+
+git diff <name>					查看本地代码和git仓库中代码的区别(明确修改的代码内容)
+
+git log						查询所有的git操作记录: 增删改（详细信息）（每条信息都会对应一个 commit id （版本号））
+
+git log —pretty=oneline				查询所有的git操作记录：增删改 (简略信息)  (最近一条的记录会有 head 标记)
+
+git reset —hard HEAD^				回退到上一个git仓库版本（标记head的版本）
+
+git reset —hard 3628164 (commit id)    回退到指定的版本
+
+git reflog					记录操作过的每一次git变更的命令 (增删改) 
+
+git checkout — <name>				丢弃工作区的修改 （ 如果已经添加到 暂存区 ）会回到和暂存区一样的状态，如果 已经添加到 git 仓库 就会回到 git 仓库的状态
+
+git reset HEAD  <name>				将已经添加到 暂存区 的代码 退回到和  git 仓库 一致
+
+git rm <name>					删除文件
+
+git checkout — <name>				从git仓库中恢复文件
+
+git clone git@github.com:allen6yan/gitskills.git     			从远程仓库中clone一份代码到本地
+
+git branch					查看分支   *表示当前所处的分支位置  （默认会创建一个master主分支）
+
+git branch <name>				创建分支
+
+git checkout <name>				切换分支
+
+git checkout -b <name>				创建并且切换分支
+
+git merge	<name>				合并某分支到当前所处的分支
+
+git branch -d  <name>				删除分支
+
+git log —graph					查看分支的合并及走向（详细）
+
+git log —graph —pretty=oneline —abbrev-commit	查看分支的合并及走向（以行的方式显示-简单）
+
+git merge —no-ff -m ‘merge with no-ff’ dev 	合并分支，并且禁用 Fast forward
+（使用 —no-ff 参数就可以用普通模式合并，合并后的历史有分支，能看出曾经做过合并，而 Faster forward 合并就看不出来曾经做过合并）
+
+
+git stash		（场景：Bug 分支）       	对当前分支上已经编辑过的内容进行归档存储，（当前分支还原成未编辑干净状态）
+
+git stash list					查看 stash 归档的 列表
+
+git stash apply				       	恢复 stash 中的 内容
+
+git stash drop					删除 stash 中的内容
+
+git stash pop					恢复的同时把stash内容也删除
+
+git branch -D <name>			       	强行销毁一个未合并的分支
+
+git remote -v					查看远程库的信息
+
+git push origin <branch-name>			本地推送分支
+
+git checkout <branch-name> origin/dev(远程分支名称)			创建远程origin的dev分支到本地（本地和远程分支的名称最好一致）
+
+git branch —set-upstream <branch-name> origin/dev(远程分支名称)	      	建立本地分支和远程分支的关联
+
+git pull					更新本地的代码库（同步远程—>如有冲突，优先处理通知）
+
+git tag <name> (commit id)			新建一个tag标签，<name> 默认为 HEAD，也可以指定一个 commit id
+
+git tag -a <tagname> -m ‘xxxxxx’         	指定标签信息
+
+git tag -s <tagname> -m  ‘xxxx’			可以用PGP 签名标签 (确保已经安装过 PGP)
+
+git tag						查看所有标签
+
+git show <tagname>				查看指定的标签信息
+
+git tag -d <tagname>				删除一个本地标签
+
+git push origin :refs/tags/<tagname>		删除一个远程标签
+
+git push origin <tagname>			推送一个本地标签
+
+git push origin —tags				推送全部的本地标签
