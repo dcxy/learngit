@@ -1,0 +1,3 @@
+有些语法格式没有讲清楚，比如 什么时候用-- 什么时候用- 等
+有的命令已经过期了，比如 the '--set-upstream' option is no longer supported. 
+Please use '--track'or '--set-upstream-to' instead.
