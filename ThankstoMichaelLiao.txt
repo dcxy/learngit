@@ -1,0 +1,8 @@
+Dear Liao
+	This letter is written to convey my gratefulness to your
+sophisticated and enligtening lectures of Git,and i'm sure that 
+words just cann't describe how great contributions you've done
+for developers all around the world.
+
+							sincerely
+						 	 JiajiWu
