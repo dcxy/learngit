@@ -1,0 +1,87 @@
+Git(分布式版本控制系统)命令学习：
+	1. git init ,将创建版本库,当前目录变成Git可以管理的仓库
+	2. git status ,查看当前仓库的状态
+	3. git diff [file] , 查看文件与之前的不同之处
+	   git diff 	       ,是工作区(word dict)与暂存区(Stage)的比较
+	   git diff --cached   ,是暂存区(stage)与分支(master)的比较
+	   git diff HEAD       ,是工作区和版本库里面最新版本的比较
+	4. git add [file] 将文件修改添加到暂存区(Stage), git commit , 提交文件，即将暂存区的所有内容提交到当前分支
+   版本回退：
+	1. git log ,显示从最近到最远的提交日志， 可以加上参数 --pretty=oneline 只显示一行信息，便于回退到哪个版本
+	2. HEAD 表示当前版本，上一个版本HEAD^,上上一个版本 HEAD^^ ,也可以写成 HEAD~3
+	   git reset --hard HEAD^
+	   版本回退之后将无法看到最新版本，可以通过 commit id 找到最新版本
+	   git reset --hard 3628164
+	   git reflog 记录你的每一次命令,便于回到未来的哪个版本
+   管理修改：
+	第一次修改 --> git add --> 第二次修改 --> git commit : 结果是第一次修改的文件提交了，而第二次修改的文件未被增加到暂存区中，所以没有被提交 
+	第一次修改 --> git add --> 第二次修改 --> git add --> git commit : 两次修改的文件都被提交了
+   撤销修改：
+	第一种：撤销工作区里的修改时：git checkout -- file
+	第二种：若乱改的文件提交到暂存区，想进行撤销：git reset HEAD file ,然后 git checkout -- file 撤销工作区修改的文件
+	第三种：若修改的文件提交到版本库，想撤销本次提交，可以进行版本回退到上一个版本(前提是没有推送到远程库)：git reset --hard HEAD^ 
+   删除文件：
+	第一种：确实要从版本库中删除该文件，直接用 git rm file 删掉，并且 git commit 提交
+	第二种：文件删错了，因为版本库里还存在工作区删除的文件，所以可以利用checkout将删除的文件恢复到最新版本：git checkout -- file
+		git checkout 是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都能一键还原
+		git rm 用于删除一个文件，如果一个文件已提交到版本库，删除的文件可以进行还原到最新版本，但是提交前的修改将会丢失
+   添加远程库：
+	关联一个远程库：git remote add origin git@github.com:JenkinWang/What-I-Learned.git
+	第一次推送master分支内容：git push -u origin master
+	此后只需使用 git push origin master进行推送最新修改
+   从远程库客隆：
+	git clone git@github.com:JenkinWang/What-I-Learned.git
+     或 git clone https://github.com/JenkinWang/What-I-learned.git
+	Git支持多种协议，默认的git://使用SSH，也可使用https等协议
+   分支管理：
+	查看分支：git branch
+     	创建分支：git branch dev
+     	切换分支：git checkout dev
+     	创建+切换分支：git checkout -b dev
+     	合并分支：git merge dev
+     	合并后，删除分支：git branch -d dev
+   解决冲突：
+	当Git无法自动合并分支时，就必须解决冲突，，解决冲突后，再提交，合并完成
+	git log --graph 可以看到分支合并图
+   分支管理策略：
+	合并分支时，加上 --no-ff 参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过分支，而fast forward 合并就看不出来曾经做过合并
+	git merge --no-ff -m 'merge with no-ff' dev
+   Bug分支：
+	修复Bug时，先创建新的bug分支进行修复，然后合并，最后删除；若手头工作尚未完成，先把工作现场 git stash 一下，然后去修复bug，修复后，再 git stash pop,回到工作现场。
+	如果在master分支上修复：
+		git checkout master
+		git checkout -b issue-101
+	修复bug，然后提交：
+		git add file_name
+		git commit -m 'fix bug 101'
+	修复完成后，切换到master分支上，并完成合并，最后删除issue-101分支：
+		git checkout master
+		git merge --no-ff -m "merged bug fix 101" issue-101
+		git branch -d issue-101
+	然后回到dev分支：
+		git checkout dev
+	查看工作现场：
+		git stash list
+	恢复工作现场的内容：
+		1）git stash apply:恢复后，stash内容并不删除，需要使用 git stash drop 来删除
+		2）git stash pop:恢复同时也把stash内容删除
+   Feature分支：
+	创建feature分支：git branch -b feature-vulcan
+	删除feature分支：git branch -D <name>; 如果要删除一个没有被合并过的分支，可以通过此命令强行删除
+   推送分支：
+	git push origin master
+
+	推送其他分支改为dev：git push origin dev
+   标签管理：
+	创建标签：git tag <name> ,默认为HEAD，最新提交的commit上
+	指定commit id创建标签：git tag <name> <commit_id>
+	指定标签信息：git tag -a <tagname> -m "blalalalla"
+	用PGP签名标签：git tag -s <tagname> -m "blaallaal"
+	查看所有标签：git tag
+	查看标签信息：git show <tagname> 
+   操作标签：
+	删除一个本地标签：git tag -d <tagname>
+	推送标签到远程：git push origin <tagname>
+	一次性推送多个未推送到远程的本地标签：git push origin --tags
+	删除远程标签：git tag -d <tagname> ,先删除本地
+		      git push origin :refs/tags/<tagname> ，再删除远程

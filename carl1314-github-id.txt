@@ -1,0 +1,51 @@
+下图帮助了我更好的理解了如下1/2/3点：
+1 .workspace、index、local repository、remote repository概念一目了然；
+2 .git checkout -- file,用index（stage）file还原workspace file，（--很重要，如果没有--，就变成了“切换到另一个分支”的命令，但是实际上目前用git checkout file目前也同样可以实现这个还原操作，可能是没有与“file”同名的branch的缘故吧）；
+3.git reset HEAD file,把暂存区的修改撤销掉（unstage），重新放回工作区(不撤销工作区的修改),git checkout HEAD file，用local repository对应file还原workspace和index对应file（撤销工作区的修改）；
+4. git diff，workspace与index比较，git diff HEAD，workspace与local repository比较；
+
+5.当git push时发现remote repository已经更新，需要用git pull --rebase(不能用git pull,否则，除了原本你要提交的那个外，会另外出现一个merge branch的提交) ；
+6.如上item4，当已经用git pull造成git push完成后另外出现一个merge branch的提交，如果想把remote repository上merge branch这条提交去掉，按照如下方法：
+1）git reset --hard HEAD^^^(具体几个^根据需要，HEAD^^^同HEAD~3),将local repository以及workspace向后更新至你打算提交内容的上一个HEAD;
+2）git pull向前更新至remote repository;
+3) 重新git commit自己要修改的内容；
+4）git push origin HEAD --force,然后remote repository的merge branch那条提交就没有了。
+7. git push origin(remote repository name)  master(local branch):master(local branch)，可以省略local branch缩写成
+    git push origin                                                                            master                        ,进一步可以缩写成
+    git push
+8.可以在本地进行多次git commit至local repository后，然后等到全部工作完成后再一次性git push到remote repository(这正是精髓，尤其是比较长周期的开发~);
+9.git reflog,查看本台PC曾经针对local repository的变更记录。
+10. git rm file相当于rm file + git add file;
+11.git add dir（ 添加dir这个目录，目录下的所有文件都被加入 ）;
+12.git revert SHA1,revert之前的commit;
+13.git cherry-pick SHA1,在当前分支添加其他分支的某个提交;
+14.git stash，备份当前的工作区的内容，从最近的一次提交中读取相关内容，让工作区保证和上次提交的内容一致。同时，将当前的工作区内容保存到Git栈中，git stash list: 显示Git栈内的所有备份，可以利用这个列表来决定从那个地方恢复。git stash clear: 清空Git栈。git stash pop      # apply last stash and remove it from the list。git stash apply stash@{0}。git stash drop stash@{0}。
+15.git log --pretty=oneline,一次提交只显示一行。
+16.用git log --graph命令可以看到分支合并图
+17.通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。
+如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。即采用--no-ff方式的git merge：
+准备合并dev分支，请注意--no-ff参数，表示禁用Fast forward：
+$ git merge --no-ff -m "merge with no-ff" dev
+可以看到，不使用Fast forward模式，merge后就像这样：
+
+18.分支策略
+在实际开发中，我们应该按照几个基本原则进行分支管理：
+首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
+你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。
+所以，团队合作的分支看起来就像这样：
+
+小结
+Git分支十分强大，在团队开发中应该充分应用。
+合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
+
+
+19.标签
+命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+  ● git tag -a <tagname> -m "blablabla..."可以指定标签信息；
+  ● git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
+  ● 命令git tag可以查看所有标签 
+  ● 命令git push origin <tagname>可以推送一个本地标签；
+  ● 命令git push origin --tags可以推送全部未推送过的本地标签；
+  ● 命令git tag -d <tagname>可以删除一个本地标签；
+  ● 命令git push origin :refs/tags/<tagname>可以删除一个远程标签。

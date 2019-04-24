@@ -1,0 +1,3 @@
+git checkout -b dev  create a new branch and exchange
+git merge  merge the special branch to current branch
+git branch -d   delete the special branch

@@ -1,0 +1,95 @@
+# Git小结
+# --------创建版本库-------------
+1、创建空目录
+2、git init 把空目录变成Git仓库
+3、git add readme.txt  将文件添加到仓库，可添加多个文件
+4、git commit -m "描述" 将文件提交到仓库
+
+# --------时光机穿梭-------------
+    git status  查看工作区状态
+    git diff readme.txt  查看修改内容
+1、版本回退
+    a、git log --pretty=oneline 查看提交历史
+    b、git reset --hard commit_id  回到上一个版本(HEAD指向当前版本, HEAD^^上上个)
+    c、git reflog  查看历史命令
+2、工作区与暂存区
+    工作区         ------->             电脑能看到的目录
+    暂存区         ------->             暂存区在版本库中(git隐藏目录)
+    git add 把文件修改添加到暂存区
+    git commit 把暂存区的所有内容提交到当前分支
+3、管理修改
+    a、git diff HEAD --readme.txt 查看工作区和版本库里最新版本的区别
+4、撤销修改
+    a、git checkout -- readme.txt  撤销工作区的修改
+    b、git reset HEAD file  丢弃暂存区的修改，在继续步骤a
+5、删除文件
+    a、git rm readme.txt  删除一个文件
+    b、git checkout -- readme.txt  恢复到最新版本
+    
+# --------远程仓库--------------
+1、创建SSH 
+    Keyssh-keygen -t rsa -C "youremail@example.com"
+    生成.ssh目录，id_rsa秘钥，id_rsa.pub
+2、登陆GitHub
+    打开“Account settings”，点"Add SSH Key" 粘贴id_rsa.pub
+3、添加远程库
+    登陆GitHub，然后，在右上角找到“Create a new repository”按钮
+    在Repository name填入learngit，点击“Create repository”按钮，就成功地创建了一个新的Git仓库：
+    git remote add origin git@github.com:michaelliao/learngit.git  关联远程库
+    git push -u origin master  关联后，使用命令第一次推送master分支的所有内容，此后不用-u
+4、从远程库克隆
+    git clone git@github.com:michaelliao/gitskills.git
+
+# --------分支管理--------------
+1、创建与合并分支
+    git branch 查看分支
+    git branch <name>  创建分支
+    git checkout <name>  切换分支
+    git checkout -b <name>  创建+切换分支
+    git merge <name>  合并某分支到当前分支
+    git branch -d <name>  删除分支
+2、解决冲突
+    git log --graph --pretty=oneline --abbrev-commit  看到分支合并图
+    解决冲突后，再提交，合并完成
+3、分支管理策略
+    git merge --no-ff -m "merge with no-ff" dev  禁用 Fast forward模式，保留分支信息
+4、Bug分支
+    创建新的bug分支进行修复，然后合并，最后删除
+    git stash list 查看stash
+    git stash  保存工作现场
+    git stash pop 回到工作现场
+5、Feature分支
+    开发一个新feature，最好新建一个分支
+    git branch -D <name>强行删除分支
+6、多人协作
+    git remote -v  查看远程库信息
+    git push origin branch-name 从从本地推送分支
+    git checkout -b branch-name origin/branch-name  本地创建和远程分支对应的分支
+    git branch --set-upstream branch-name origin/branch-name  建立本地分支和远程分支的关联
+    git pull  从远程抓取分支
+    
+# --------标签管理--------------
+1、创建标签
+    git tag 查看所有的标签
+    git tag <name>  默认为HEAD，或者指定commit id
+    git tag -a <tagname> -m "blablabla"  指定标签信息
+    git tag -s <tagname> -m "blablabla"  用PGP签名标签
+2、操作标签
+    git push origin <tagname>  推送一个本地标签；
+    git push origin --tags  推送全部未推送过的本地标签；
+    git tag -d <tagname>  删除一个本地标签；
+    git push origin :refs/tags/<tagname>  删除一个远程标签。
+    
+# --------使用GitHub----------
+    在GitHub上，可以任意Fork开源仓库；
+    自己拥有Fork后的仓库的读写权限；
+    可以推送pull request给官方仓库来贡献代码。
+    
+# --------自定义Git------------
+1、忽略特殊文件
+    忽略某些文件时，需要编写.gitignore
+    .gitignore文件本身要放到版本库里，并且可以对.gitignore做版本管理！
+    git add -f App.class  强制添加到Git
+    git check-ignore -v App.class  检查规则
+2、配置别名
+    git config --global alias.st status  --global针对当前用户起作用，如果不加仅针对当前的仓库

@@ -1,0 +1,224 @@
+yum install -y git
+
+git config --global user.name "YourName"
+git config --global user.email "email@example.com"	自报家门
+
+mkdir learngit
+cd learngit
+git init		初始化仓库，包含.git目录
+
+vi readme.txt
+git add readme.txt	这步可以add多次，例如 git add file1; git add file2 git add file3;
+git commit -m "wrote a readme file"		接上： 	git commit -m "add 3 file"
+
+
+git status	查看当前仓库状态
+	1. Changes not staged for commit:	修改，但未add和commit
+	2. Changes to be committed:		修改，已add，未commit
+	3.nothing to commit (working directory clean)	没有需要提交的修改
+
+git diff readme.txt	顾名思义就是查看difference，显示的格式正是Unix通用的diff格式，查看不同
+
+如果git status告诉你有文件被修改过，用git diff可以查看修改内容。
+
+
+
+
+git log		显示从最近到最远的提交日志（也可以加上--pertty=oneline简化输出）
+
+git reset --hard HEAD^	回退到上个版本，HEAD后面跟几个'^'，就回退几个版本，例如HEAD^^^回退3个版本，版本太多也可以写成			
+
+HEAD~100
+
+git reset --hard COMMITID	回到COMMITID所在的版本
+
+Git的版本回退速度非常快，因为Git在内部有个指向当前版本的HEAD指针，当你回退版本的时候，Git仅仅是把HEAD从指向3改为指向2，然后顺便把
+
+工作区的文件更新了。所以你让HEAD指向哪个版本号，你就把当前版本定位在哪。
+
+
+
+
+git reflog 	显示每次版本更新的记录
+
+
+HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset --hard commit_id。
+
+穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。
+
+要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。
+
+
+
+从远程库克隆
+
+git clone git@server-name:path/repo-name.git
+实际上，Git支持多种协议，默认的git://使用ssh，也可以使用https等其他协议,但通过ssh支持的原生git协议速度最快
+
+
+
+
+
+工作区和暂存区
+
+工作区就是实际操作的目录
+
+在版本库中（.git） 有很多东西，最重要的就是称为stage（或index）的暂存区，还有git为我们自动创建的第一个分支master，以及指向master
+
+的一个指针HEAD
+
+1. git add 	实际上就是把文件修改添加到暂存区
+2. git commit 	实际上就是把暂存区的所有内容提交到当前分支
+
+其中，在我们创建git版本库时，git为我们自动创建了唯一一个master分支
+，git commit就是往分支上提交修改
+
+
+
+
+
+管理修改
+
+Git跟踪并管理的是修改，而非文件
+
+例如：修改一个文件后，先git add ，在修改这个文件,在git commit 后用git status查看状态，发现第二次修改没有被提交
+Git管理的是修改，当你用git add命令后，在工作区的第一次修改被放入暂存区，准备提交，但是，在工作区的第二次修改并没有放入暂存区，所
+
+以，git commit只负责把暂存区的修改提交了，也就是第一次的修改被提交了，第二次的修改不会被提交。
+
+
+
+撤销修改
+
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+	git checkout -- file命令中的--很重要，没有--，就变成了“切换到另一个分支”的命令，我们在后面的分支管理中会再次遇到git 
+
+checkout命令。
+
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1
+
+，第二步按场景1操作。
+
+场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+
+
+
+删除文件
+rm -f test.txt
+git rm file
+git commit -m "remove file"
+
+误删git checkout -- test.txt
+
+
+
+
+添加远程库
+
+注册GitHub账号
+1.在GitHub新建一个repository
+2.git remote add origin git@github.com:michaelliao/learngit.git	关联一个远程库
+3.git push -u origin master	第一次推送master分支的所有内容
+4.git push origin master	此后，每次本地提交后，只要有必要，就可以使用命令推送最新修改
+ssh警告
+  当你第一次使用Git的clone或者push命令连接GitHub时，会得到一个警告，这是因为Git使用SSH连接，而SSH连接在第一次验证GitHub服务器的
+
+Key时，需要你确认GitHub的Key的指纹信息是否真的来自GitHub的服务器，输入yes回车即可。Git会输出一个警告，告诉你已经把GitHub的Key添加
+
+到本机的一个信任列表里了：
+
+
+
+创建合并分支
+
+创建并切换
+git checkout -b dev  =>等同于  git branch dev; git checkout dev
+
+查看所有分支
+git branch 
+
+切换分支
+git checkout master
+
+合并分支
+git merge dev 
+
+删除分支
+git branch -d dev
+
+因为创建、合并和删除分支非常快，所以Git鼓励你使用分支完成某个任务，合并后再删掉分支，这和直接在master分支上工作效果是一样的，但过
+
+程更安全。
+
+
+
+解决分支冲突
+
+git log --graph --pretty=oneline --abbrev-commit	查看分支合并图
+
+如果分支提交不同的内容，可以git status 查看冲突文件
+然后在文件中修改冲突内容，然后提交，即可												
+
+							
+
+分支管理策略
+在合并分支是添加参数，git merge --no-ff -m "merge with no-ff" dev	表示禁用Fast forward模式，使用普通模式合并
+这种模式可以在git log --graph 上看到分支合并的记录，而ff模式则看不到	
+
+在实际开发中，我们应该按照几个基本原则进行分支管理：
+首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master
+
+分支发布1.0版本；
+你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。					
+
+	
+
+bug分支
+
+修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除
+当手头上的工作没有完成时，先把现场 git stash 保存一下，然后再去修复bug
+git stash list		查看之前保存过的工作区
+git stash pop	恢复stash工作区内容并删除之前的保存，等同于 git stash apply；git stash drop（先恢复后删除）
+
+如果想删除分支，但是里面的内容已经提交，切未合并，那么需要git branch -D dev 来删除
+
+
+
+
+
+多人协作		-- 一般会提示错误后的操作
+
+git remote 查看远程库信息（git remote -v查看详细信息）
+gitcheckout -b branch-name origin/branch-name	在本地建立和远程分支对应的分支
+git branch --set-upstream branch-name origin/branch-name    建立本地和远程分支的关联
+
+多人协作工作模式
+1.首先尝试 git push origin brnach-name 推送自己的修改
+2.如果推送失败，则因为远程分支比你的本地更加新，需要先 git pull 试图合并
+3.如果合并有冲突，则需要解决冲突
+	如果出现（no tracking information）的提示，则说明本地分支和远程分支的链接关系没有创建，用 git branch --set-upstream 
+
+branch-name origin/branch-name 这个命令建立关联
+4.没有冲突或者解决掉冲突后，再用 git push origin branch-name 推送就能成功
+
+
+
+
+
+
+创建标签
+
+git tag			查看已存在标签
+git tag tag-name	为当前分支下HEAD下新建一个标签
+git tag tag-name commit-id	为历史某个commit新建标签
+git tag -a tag-name -m "describe"	指定标签信息
+git tag -s tag-name -m "describe"	可以用PGP签名标签
+
+标签操作
+
+git push origin <tag-name>	推送一个本地标签
+git push origin --tags		推送所有标签
+git tag -d <tag-name>		删除本地标签
+git push origin :refs/tags/<tag-name>	删除远程标签
+

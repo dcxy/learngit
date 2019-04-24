@@ -1,0 +1,69 @@
+1, 比较不同
+git diff a.txt
+
+2，提交历史
+git log
+
+3，强制回退到某个版本
+git reset --hard HEAD^
+git reset --hard HEAD~100
+git reset --hard 3628164
+
+4, 查看所有运行的git命令
+git reflog
+
+5, 查看本地与远程仓库的区别
+git diff HEAD -- readme.txt
+
+6, stage暂存区
+必须要先git add到暂存区，然后再commit，也可以使用 git commit -a -m "msg"等价实现
+
+7, 撤销当前的修改，从远程仓库或者stage检出文件。把工作空间的文件还原。
+git checkout -- file
+
+8, 重置stage里面的内容，unstage的操作。
+git reset HEAD readme.txt
+
+9, 添加远程仓库关联本地
+git remote add origin git@github.com:githubao/learngit.git
+
+10, 创建并切换分支
+git checkout -b dev
+
+11, 合并分支
+git merge dev
+使用no-fast-forward方式合并分支，此时会创建一次merge的提交
+git merge --no-ff -m "msg" dev
+
+12, 保存当前的工作状态
+git stash
+处理完bug，然后再回到dev上面工作
+git stash pop
+
+13, 一般需要四个分支
+master,dev,feature-alias,issue-num
+
+14, 远程仓库的版本
+git remote -v
+原始的master分支的名字就叫origin
+
+15, 检出远程的dev分支
+git checkout -b dev origin/dev
+建立与远程仓库的连接
+git branch --set-upstream dev origin/dev
+
+16, 打标签
+git tag v1.2
+git tag v0.9 ebsjgghdj
+git show V0.9
+git tag -a v0.9 -m "msg" ebsjgghdj
+
+17, 推送标签
+git push origin v1.2
+推送所有标签
+git push origin --tags
+删除远程标签
+git push origin :refs/tags/v0.9
+
+15, a
+b

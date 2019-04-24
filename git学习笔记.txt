@@ -1,0 +1,235 @@
+
+一，git历史：
+
+    Linus在1991年创建了开源的Linux，因为Linux是开源的，所以Linux的壮大是靠全世界热心的志愿者参与的，这么多人在世界各地为Linux编写代码，那么就要考虑如何管理这些代码，Linux最开始是手工的方式合并代码。但是随着Linux发展不断壮大，代码也越来越多，人工合并的方式不再现实，同时社区的弟兄们也对这种方式表达了强烈不满。于是Linus选择了一个商业的版本控制系统BitKeeper(出于人道主义精神，免费供其使用)，在后来，安定团结的大好局面在2005年就被打破了，原因是Linux社区牛人聚集。于是就有人试图破解BitKeeper的协议，但是被BitMover公司发现了（监控工作做得不错！）于是BitMover公司怒了，要收回Linux社区的免费使用权。于是Linux花了两周时间自己用C写了一个分布式版本控制系统，这就是Git！
+
+  一个月之内，Linux系统的源码已经由Git管理了！牛是怎么定义的呢？可以体会一下。
+
+二，集中式和分布式版本控制系统区别：
+
+   ·集中式版本控制系统代表有svn、cvs:
+
+    >> 集中式版本控制系统，版本库是集中存放在中央服务器的，而干活的时候，用的都是自己的电脑，所以要先从中央服务器取得最新的版本，然后开始干活，干完活了，再把自己的活推送给中央服务器。中央服务器就好比是一个图书馆，你要改一本书，必须先从图书馆借出来，然后回到家自己改，改完了，再放回图书馆。
+
+    >> 缺点：集中式版本控制系统最大的毛病就是必须联网才能工作，如果在局域网内还好，带宽够大，速度够快，可如果在互联网上，遇到网速慢的话，可能提交一个10M的文件就需要5分钟。
+
+   ·分布式版本控制系统：git
+
+    >> 分布式管理系统没有“中央服务器”，每个人电脑都是一个完整的版本库，所以工作的时候就不用连网了，但在实际开发中，分布式管理系统也有一台充当“中央服务器”的电脑。仅用来交换修改，没有它照样干活只是交换不方便而已。
+
+    >> 优点不只是不用连网，而且Git有强大的分支管理。
+
+三，使用(多次添加(git add) 一次提交(git commit))：
+
+   1，安装：window下只需去官网下载即可。（https://git-for-windows.github.io），速度慢可以移至国内镜像（https://github.com/waylau/git-for-win）。ios,linux不考虑。
+
+   2，初始化仓库
+
+      只需在下载好的Git命令符中输入：
+
+      >> $ git init
+
+   3,自报家门：
+
+      继续在命令符中输入（全局配置）：
+
+      >> $ git config --global user.name "用户名";
+
+         $ git config --global user.email "邮箱";
+
+   3,跟踪文件：
+
+      先创建一个文件（readme.txt）
+
+      >> $ git add readme.txt    //将文件添加到暂存区
+
+      取消跟踪：
+
+      >> $ git rm --cached 文件名
+
+   4，查看跟踪文件：
+
+      >> $ git status
+
+   5,提交文件:
+
+      >> $ git commit -m "本次提交的说明"   //把暂存区的所有内容提交到当前分支
+
+   6,查看修改
+
+      >> $ git diff
+
+   7,查看日志(从最近到最远)
+
+      >> $ git log
+
+      缩写：
+
+      >> $ git log --pretty=oneline --abbrev-commit
+
+   8,退回某一个版本(HEAD表示当前版本)
+
+     >> $ git reset --hard HEAD^
+
+     想还原，后悔了怎么办?
+
+     >> $ git reflog  //(记录命令找到commit id)
+
+     然后：
+
+     >> $ git reset --hard [commit id]
+
+     还原成功，我胡汉三又回来了。
+
+   9,删除一个文件
+
+     >> $ git rm 文件名
+
+     >> $ rm 文件名
+
+--------本地的一次用Git创建文件到提交文件和时光穿梭已经完成。
+
+四，远程仓库：
+
+   gitHub(相当于一台自己的服务器)，可以用Git远程连接（本地Git仓库和GitHub仓库之间的传输是通过SSH加密的），创建修改并发布自己的代码。
+
+  ·第1步：创建SSH Key(打开shell即Git Bash):
+
+   >> 在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件（id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。），如果已经有了，可直接跳到下一步。如果没有则进行下面操作：
+
+   $ ssh-keygen -t rsa -C "git用户名@example.com"
+
+   然后一路回车。
+
+   >> 配置用户名写错怎么办?
+
+      $ git remote rm origin
+  
+      或者在本地git版本库中修改config文件。
+
+  ·第2步：登陆GitHub，打开“Account settings”，“SSH Keys”页面：
+
+    然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容.
+
+    点“Add Key”，你就应该看到已经添加的Key.
+
+   >> 为什么GitHub需要SSH Key？
+
+      因为GitHub需要识别出你推送的提交确实是你推送的，而不是别人冒充的，而Git支持SSH协议，所以，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送。
+
+  ·第三步：在github上新建一个仓库。title对应config文件中的路径。
+
+  ·第四步：在本地仓库中运行以下命令，建立连接
+
+   >> $ git remote add origin git@github.com:github用户名/远程仓库名.git
+
+  ·第五步：
+
+   >> $ git push -u origin master
+
+   由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+
+   下次修改后提交就可以这样：
+
+   >> $ git push origin master
+
+--------现在为止，本地库与远程库就连接起来了。即可通过git push origin master上传。
+
+五，克隆
+
+   克隆一个仓库，首先必须知道远程仓库的地址（如github仓库），然后使用git clone命令克隆。
+
+   Git支持多种协议，包括https，但通过ssh支持的原生git协议速度最快。
+
+六，分支管理
+
+   >> $ git branch dev      //创建分支(dev)
+
+   >> $ git checkout dev    //切换到分支(dev)
+
+   >> $ git checkout -b dev //综合写法(创建并切换)
+
+   >> $ git branch          //查看当前分支
+
+   >> $ git merge dev       //合并指定分支到当前分支，历史无记录。
+
+   >> $ git merge --no-ff -m "merge with no-ff" dev  //--no-ff 表示合并分支时禁用Fast forward模式，历史会有记录。
+
+   >> $ git branch -d dev   //删除分支
+
+   >> $ git branch -D dev   //删除未合并的分支(强行删除)
+
+注意：Git鼓励你使用分支完成某个任务，合并后再删掉分支，这和直接在master分支上工作效果是一样的，但过程更安全。
+
+七，解决冲突
+
+   当Git无法自动合并分支时，就必须首先解决冲突(手动解决)。解决冲突后，再提交，合并完成（注意：这里无需在用命令合并一遍）。
+
+   Git用<<<<<<<，=======，>>>>>>>标记出不同分支的内容。
+
+   用>> $ git log --graph 命令可以看到分支合并图。
+
+八，修复bug
+
+   1，储存当前工作区       >> $ git stash
+
+   2，新建分值issue-001   >> $ git checkout -b issue-001
+
+   3，修复中...
+
+   4，提交               >> $ git add * || git commit -m ""
+
+   5，切换到主分支         >> $ git checkout master
+
+   6，合并分支并删除分支    >> $ git branch -d issue-001
+
+   7，查看保存的工作现场    >> $ git stash list
+
+   8，恢复当前工作区       >> $ git stash pop
+
+九，多人协作
+
+   查看远程库的信息：  >> $ git remote  / $ git remote -v
+
+   推送分支： >> $ git push origin dev
+
+   ·master分支是主分支，因此要时刻与远程同步；
+
+   ·dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+
+   ·bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+
+   ·feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+
+    多人协作的工作模式通常是这样：
+
+    1，在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+
+    2，从本地推送分支 >> $ git push origin branch-name
+
+    3，如果推送失败，则因为远程分支比你的本地更新，需要先用git pull，试图合并；
+
+    4，如果合并有冲突，则解决冲突，并在本地提交；
+
+    5，没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+
+    注意:如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+
+十，标签
+
+   创建标签：      >> $ git tag <name example: v1.0>
+
+   创建带有说明的标签:  >> $ git tag -a <name> -m "说明内容" <commitId>
+
+   对应id创建标签： >> $ git tag <name> <commitId>
+
+   查看提交id：    >> $ git log --pretty=oneline --abbrev-commit
+
+   查看所有标签：   >> $ git tag
+
+   查看标签信息：   >> $ git show <tag name>
+
+   删除标签：      >> $ git tag -d v1.0
+
+
+

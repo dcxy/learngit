@@ -1,0 +1,33 @@
+'''my summary:'''
+mkdir <yourlocaldir>
+cd <yourlocaldir>
+git init
+'''do some changes'''
+git add <changes>
+git commit -m "your annotation"
+
+git checkout -- <changes>
+git status
+git log
+git reflog
+git log --graph --pretty=oneline --abbrev-commit
+git branch <yourbranchname>
+git checkout <yourbranchname>
+git reset --hard HEAD^
+git stash
+git stash list
+git stash apply stash@{0}
+git merge <yourbranchname>
+
+git branch -d <yourbranchname>
+ssh-keygen -t rsa -C "emailaddress"
+'''put your pub ssh key in your remote repository'''
+ssh -T git@github.com
+git remote add origin "ssh git address"
+git push -u origin master
+git pull origin master --allow-unrelated-histories
+
+git tag v1.0
+git clone <ssh git address>
+
+

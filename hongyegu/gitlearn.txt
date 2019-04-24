@@ -1,0 +1,82 @@
+//git 
+//1.创建一个新目录
+mkdir learngit
+//2.进入该目录
+cd learngit
+//3.显示当前目录
+pwd
+//4.初始化当前目录变为Git可以管理的仓库
+git init
+//查看隐藏目录
+ls -ah
+//5.添加文件值git
+git add git操作.txt
+//6.把文件提交到仓库 -m 后面为本次提交的说明
+git commit-m "wrote a file"
+//7.查看仓库当前的状态
+git status
+//8.查看具体修改的内容
+git diff git操作.txt
+git diff HEAD --git操作.txt
+//9.版本回退 HEAD当前版本 HEAD~100
+git reset --hard Head or commitid
+//10.git 查看提交历史
+git log
+//11.查看命令历史
+git reflog
+//12.直接丢弃工作区的修改
+git checkout -- file
+//13.撤销暂存区修改
+git reset HEAD file
+//14.删除文件 工作区 版本库中
+rm git操作.txt 
+git rm git操作.txt
+git commit-m "remove git操作.txt"
+//15.版本库中替换工作区中版本 一键还原
+git checkout -- git操作.txt
+//16.关联远程库
+git remote add origin git@server-name:path/repo-name.git
+//17.推送master分支的所有内容
+git push -u origin master
+//18.推送最新修改
+git push origin master
+//19.先建远程库 然后克隆一份至本地库 xxxx为用户名 gitskills为远程库名称
+git clone git@github.com:XXXX/gitskills.git
+//20.查看分支：
+git branch
+//21.创建分支：
+git branch <name>
+//22.切换分支：
+git checkout <name>
+//23.创建+切换分支：
+git checkout -b <name>
+//24.合并某分支到当前分支：
+git merge <name>
+//25.删除分支/强行删除
+git branch -d <name>
+git branch -D <name>
+//26.查看分支历史
+git log --graph --pretty=oneline --abbrev-commit
+//27.no-ff模式合并分支 dev 为分支
+git merge --no-ff -m "merge with no-ff" dev
+//28.Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+git stash
+//29.回到工作现场
+git statsh pop
+//30.查看远程库信息
+git remote -v
+//31.从本地推送分支
+git push origin branch-name
+//32.远程分支比你的本地更新，需要先用git pull试图合并
+//33.创建一个新标签,默认为HEAD，也可以指定一个commit id
+git tag v1.0
+//34.设置别名
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+//35.GitHub
+多人协作的工作模式通常是这样：
+1.首先，可以试图用git push origin branch-name推送自己的修改；
+2.如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+3.如果合并有冲突，则解决冲突，并在本地提交；
+4.没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+5.如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+6.这就是多人协作的工作模式，一旦熟悉了，就非常简单。

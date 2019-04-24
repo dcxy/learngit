@@ -1,0 +1,114 @@
+# Git 常用命令说明 
+
+#用户声明：
+$ git config --global user.name "LeePaco"
+$ git config --global user.email "sun300400@163.com"
+
+# 新建一个文件夹：
+$ mkdir <file> # <file> 表示文件夹的名称
+
+# 进入哪个文件夹的目录
+$ cd <file> 
+
+# 显示当前所在的文件夹目录
+$ pwd
+
+# 查看当前目录下的文件，不包含隐藏文件
+$ ls
+
+# 查看当前目录下的文件，包含隐藏的文件
+$ ls -ah
+
+# 初始化一个Git仓库：
+$ git init
+
+# 添加文件到Git仓库，需要两步：
+$ git add <file>
+$ git commit -m "xxxx"  %"xxx"可以是任意文本，目的是对这次变更进行描述
+
+# 当前仓库状态查询命令：
+$ git status
+
+# 查看当前仓库，具体变更内容的命令：
+$ git diff
+
+# 查看变更日志：
+$ git log
+
+# 查看变更日志简洁版(信息排成一行)：
+$ git log --pretty=oneline
+
+# 查看变更日志的提交ID号的命令：
+$ git reflog
+
+# Git 中 HEAD 指向的版本就是当前的版本
+
+# 让文件回到哪个版本的命令：
+$ git reset --hard commit_id # commit_id 是指变更提交的ID。
+
+# 变回到上一个版本的命令：
+$ git reset --hard HEAD^
+
+# 变回到上上的版本的命令是：
+$ git reset --hard HEAD^^ # 或者是 $ git reset --hard HEAD~2
+
+# 将文件在工作区的修改全部撤销（修改还未放到缓存区 stage）：
+$ git checkout -- file
+
+# 将已经放入缓存区的修改，撤销到工作区：
+$ git reset HEAD file
+
+$ cat flie # 读取 file这个文件的内容。
+
+# 将工作区中的文件删除(注意一点：删除的文件，必须 要使用git commit -m 才能在版本库中生效)；
+$ git rm file # 将文件flie从工作区删除。
+
+# 在用户主目录下创建 SSH Key
+$ ssh-keygen -t rsa -C "sun300400@163.com"
+
+# 将本地仓库与Github的远程库建立关联的命令：
+$ git remote add origin git@github.com:LeePaco/Git-study.git
+
+# 将本地库的所有内容推送到远程库的命令：
+$ git push -u origin master # 第一次推送master要使用-u的参数。
+
+# 后续本地提交 推送则不需要 -u的参数：
+$ git push origin master
+
+# 从Github 远程克隆（git clone）仓库到本地的命令：
+$ git clone git@github.com:LeePaco/gitskills.git
+
+========================
+# 分支的相关命令说明：
+
+# 创建分支 dev
+$ git branch dev
+
+# 切换分支到 dev
+$ git checkout dev
+
+# 创建分支+切换分支到 dev
+$ git checkout -b dev  #-b的参数表示创建并切换
+
+# 查看当前分支
+$ git branch
+
+# 合并分支到dev
+$ git merge dev
+
+# 删除分支
+$ git branch -d dev
+
+# 查看分支合并图
+$ git log --graph
+
+# 读取入文本文件并编辑：
+$ vi <file>
+
+# 退出文本文件：
+：wq
+
+
+
+
+
