@@ -1,0 +1,85 @@
+
+资源：https://git-scm.com/book/en/v2  git文档  
+
+//安装git
+1.  从https://git-for-windows.github.io下载，然后按默认选项安装即可
+2.  配置用户信息  $ git config --global user.name "Your Name"
+                 $ git config --global user.email "email@example.com"
+
+//创建版本库
+资源：https://www.cnblogs.com/yolanda-lee/p/4544573.html  linux目录相关操作
+     https://www.cnblogs.com/sdgf/p/6237847.html    git 换行符LF与CRLF转换问题
+1.  使用 git init 创建仓库    ‘如果你使用Windows系统，为了避免遇到各种莫名其妙的问题，请确保目录名（包括父目录）不包含中文。’
+2.  创建完成后会多出一个 .git 的隐藏目录  可以使用 ls -a 查看
+3.  “所有的版本控制系统，其实只能跟踪文本文件的改动，比如TXT文件，网页，所有的程序代码等等”
+4.  git add <file> 添加到仓库，可反复多次使用，添加多个文件；  git commit -m ''  提交到仓库  -m 指示这次提交的说明
+
+//版本回退
+1.  git log命令显示从最近到最远的提交日志。加上 --pretty=oneline 获得另一种显示
+2.  git reset --hard HEAD^ 回退到上个版本 上上个版本为 HEAD^^ 上100个版本可以写为 HEAD~100  也可以指定版本号以重置。
+3.  git reflog 查看命令历史
+
+//工作区和暂存区
+1.  git status查看状态，未执行过 git add 命令的文件状态为 Untracked
+2.  git add 会将文件添加到暂存区  再由 git commit 一次性提交 
+
+//管理修改
+1.  每一次修改都需要添加到暂存区，提交才会生效。
+2.  git diff HEAD -- readme.txt(此命令为当时实验时的命令，后同)命令可以查看工作区和版本库里面最新版本的区别
+
+//撤销修改
+1.  git checkout -- readme.txt 撤销修改 ‘一种是readme.txt自修改后还没有被放到暂存区，现在，
+    撤销修改就回到和版本库一模一样的状态；一种是readme.txt已经添加到暂存区后，又作了修改，现在，
+    撤销修改就回到添加到暂存区后的状态。’
+2.  cat readme.txt 查看文件内容
+3.  git reset HEAD file 可以把暂存区的修改撤销掉，重新放回工作区
+
+//删除文件
+1.  使用git rm 从版本库删除文件，需要提交。
+2.  使用git checkout -- <file>还原文件，“只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容。”。
+3.  git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+
+//添加远程库
+1.  git remote add origin git@server-name:path/repo-name.git  关联远程库
+2.  git remote rm rmname  移除远程库
+3.  “关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
+    此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；”
+
+//克隆远程库
+1.   git clone  git@server-name:path/repo-name.git
+
+//创建与合并分支
+1.  “查看分支：git branch”
+2.  “创建分支：git branch <name>”
+3.  “切换分支：git checkout <name>”
+4.  “创建+切换分支：git checkout -b <name>”
+5.  “合并某分支到当前分支：git merge <name>”
+6.  “删除分支：git branch -d <name>”
+
+//解决冲突
+1.  合并冲突时，必须手动解决冲突后，在提交修改
+2.  git log --graph 可以看到分支合并图  “git log --graph --pretty=oneline --abbrev-commit”
+
+//分支管理策略
+1.  合并分支时加上 --no-ff 参数禁用快速合并，这样“合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并”
+2.  实际开发中 master分支用来发布新版本  dev用来开发 
+
+//bug分支
+1.  "先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场"
+2.  可以多次git stash 然后指定stash 恢复
+3.  git stash pop相当于先git stash apply 然后git stash drop
+4.  git stash list查看stash
+
+
+//Feature分支
+1.  “开发一个新feature，最好新建一个分支”
+2.  “如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除”
+
+//多人协作
+1.  “首先，可以试图用git push origin branch-name推送自己的修改；如果推送失败，则因为远程分支比你的本地更新，
+    需要先用git pull试图合并；如果合并有冲突，则解决冲突，并在本地提交；没有冲突或者解决掉冲突后，再用
+    git push origin branch-name推送就能成功！如果git pull提示“no tracking information”，则说明本地分支和
+    远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。”
+2.  git remote -v查看远程库信息
+
+

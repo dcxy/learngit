@@ -1,0 +1,41 @@
+1.你是谁
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+2.创建版本库
+$ cd "你文件夹的路径"
+$ git init //这是把这个文件夹变成管理的仓库
+$ git add 带后缀文件名 //把文件放入库输入这，表示添加一个文件
+$ git commit -m"文件改变了什么，在这说明" //提交到仓库
+3.查看版本
+$ git log //git log --pretty=oneline如果太多可用这个命令
+4.回退
+$ git reset --hard head^ //head是当前的版本，head^是上个版本head^^是上上个版本
+$ git reset --hard (输入未来的commit id)这是回到回退前版本 commit id可以往上找 
+$ git reflog //可以查看我们这钱的命令，查看commit id
+5.撤销修改
+$ git checkout -- 带后缀文件名 //将工作区修改操作撤销
+$ git reset head 带后缀文件名 //这是将暂存区修改操作撤销到工作区
+6.删除文件
+$ rm 文件名 //删除文件但版本库还有
+$ git rm 文件名 再提交就是从版本库删除文件
+$ git checkout -- 文件名 将删除的文件恢复
+7.添加远程库
+$ git remote add origin SSH地址 //之后配置好SSH密匙
+$ git push -u origin master //把本地内容推送到远程库
+$ git push origin master //之后每次推送你用这个命令
+8.从远程库克隆
+$ git clone git@github.com:github的账号/远程库名.git  //这是将远程库克隆到本地
+9.创建合并分支
+$ git checkout -b dev //创建分支，-b表示创建并且换到该分支
+$ git checkout master //切换回master分支
+$ git branch //查看分支
+$ git merge <name> //当前分支和这个分支合并
+$ git branch -d <name> //删除分支
+$ git log --graph --pretty=oneline --abbrev-commit //这是查看分支合并情况，另外分支合并冲突得手动解决
+$ git merge --on-ff -m "操作信息" <name>  //这样的合并有历史记录
+$ git branch -D <name> //删除没有被合并的分支
+10.标签
+$ git tag <标签名> //这是在最新的commit上添加tag
+$ git tag <标签名> <commit id> //为某个commit命令添加标签
+$ git tag -a <标签名> -m <描述信息> <commit id> //为某个命令添加标签和相关的描述
+$ git tag -s <标签名> -m <描述信息> <commit id>  //签名这个标签

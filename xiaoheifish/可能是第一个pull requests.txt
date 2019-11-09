@@ -1,0 +1,4 @@
+1.谢谢老师~~
+2.git merge git rebase 使用场合，仍然不明确
+3.养成良好的commit习惯
+4.在团队中订制branch的规则

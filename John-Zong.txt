@@ -1,0 +1,71 @@
+Git使用教程笔记
+
+一、安装git和提交文件到仓库
+
+
+	* 注册帐号：www.github.com
+	* 安装git：sudo apt-get install git
+	* 配置用户名和邮箱  git config --global user.name  john-zong     git config --global user.email youremail@example.com  当使用了--global参数，表示这台机器上所有的Git仓库都会使用这个配置
+	* 创建版本库：在制定的文件目录下执行 git init
+	* 添加文件到版本库：1.创建文件后， git add reame.txt 添加文件到缓存区；git commit -m 'wrote a readme file' 把文件添加到仓库; 可以多次add不同的文件，一次性commit
+
+
+
+二、时光穿梭机
+
+	* 查看状态：git status 查看当前工作区状态，git diff 查看修改内容
+	* 版本回退：git reset --hard HEAD^表示回到上个版本，等价于 git reset --hard commitID；通过git log --pretty=oneline或git reflog查看commitID
+	* 工作区和暂存区：git add 把文件添加到暂存区；git commit提交修改，把暂存区的内容提交到当前分支
+	* 管理修改：每次修改，如果不add到暂存区，那就不会加入到commit中。git diff HEAD -- readme.txt查看工作区和版本库中最新版本的区别
+	* 撤销修改：git checkout -- file 直接丢弃工作区的修改；git reset HEAD file 取消提交file文件到暂存区；git reset -- hard commit 版本回退
+	* 删除文件：Git中，删除也是一个修改操作，git rm filename; git commit -m 'delete filename',如果在文件夹中误删了文件，git checkout -- filename 即可找回文件
+
+
+三、远程仓库
+
+
+	* 远程仓库：Github网站提供Git仓库托管服务，本地Git仓库和Github仓库之间的传输通过SSH加密
+	* 创建SSH Key： sudo apt-get install openssh-server ；ssh-keygen -t rsa -C 'youremail@example.com',然后一路回车，复制~/.ssh/is_rsa.pub内容
+	* Github上添加SSH key：打开Accouent setting ->'SSH Keys',Add SSH key，在文本框粘贴id_rsa.pub内容
+	* 添加远程仓库：git remote add orgin git@server-name:path/repo-name.git 关联后，使用git push -u orgin master第一次推送master分支的所有内容；此后每次提交用 git push orgin orgin master
+	* 从远程仓库克隆：知道仓库地址后，git clone git@server-name:path/repo-name.git
+
+
+四、分支管理
+
+	* 创建与合并分支：git branch/git brancha <name>/git checkout <name>/git checkout -b <name>/git merge <name>/git branch -d <name>
+	*  解决冲突：分支和master不一致，git merge feature 会报错，先解决冲突再提交。git log --graph --pretty=oneline --abbrev-commit看分支合并图
+	* 分支管理策略：合并分支加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经合并过，而fast forward合并就看不出来曾经做过合并 git merge --no--ff -m 'merge with no-ff' dev
+	* bug分支：正在dev分支开发，来了一个代号101的bug，现在dev分支上git stash，保存当前进展，然后去msater创建临时分支 git checkout -b issue-101,修改，添加，提交后，删除issue-101分支；再切换到dec分支 git stash pop 即可恢复当前dev分支开发进展
+	* Feature分支：丢弃一个没有被合并过的分支，用 git branch -D name 强行删除
+	* 多人协作：[ ] 查看远程库信息，git remote -v 
+
+                        [ ] 从本地推送分支：git push origin branch-name
+                        [ ] 在本地创建和远程分支对应的分支：git checkout -b branch-name origin/branch-name
+                        [ ] 建立本地分支和远程分支的关联：git branch-set-upstream branch-name origin/branch-name
+                        [ ] 从远程抓取分支，使用git pull ，如果有冲突，要先处理冲突
+五、标签管理
+
+	* 创建标签：[ ] 创建新标签：git tag <name> 2547826,创建一个新标签，默认为HEAD,也可以指定一个commit id
+
+                        [ ] 制定标签信息：git tag -a <tagname> -m 'balblabla~~'
+                        [ ] 用PGP给标签签名：git tag -s <tagname> -m 'blablabla~~~'
+                        [ ] 查看所有标签：git tag 
+
+
+	* 操作标签：[ ] 推送本地标签：git push origin <tagname>,推送全部本地标签：git push origin --tags
+
+                        [ ] 删除本地标签：git tag -d <tagname>,删除远程标签：git push origin:refs/tags/<tagname>
+
+
+
+
+
+
+
+
+
+
+
+
+

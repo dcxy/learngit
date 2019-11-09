@@ -1,0 +1,15 @@
+学习笔记
+
+2016年起，我就在廖雪峰老师的网站学习python，知道了一些最基本的概念。比如变量，赋值，函数等。
+来学习Git,因为加入了一个编程的学习小组，学习小组的任务最基本就是掌握git.
+目前网站上的git内容还没有学习完。掌握了在电脑上安装 git 软件，知道分布式版本控制概念。
+也自己动手练习，学习了，基本的命令.
+c d learngit\xx\xx
+git add xxx.txt  推送到库
+git commite -m" creat a file" 提交文件到库
+git log 查看历史修改信息
+git log --prett=yoneline 修改信息显示在一行之中
+git status  查看状态，是否有文件准备推送
+git reset --hard Head^ 版本回退  当前版本Head ，上一版本Head^,上上版本Head^^,Head-100回退100个版本
+head：head处可以替换为commit id（版本号），一个SHA1生成16进制代码标题。
+git reset --hard xxxx (xxx为你回退版本后，你还像改回你你最新一次版本时，输入最近一次版本的 commit Id，复制前几位即可。)
