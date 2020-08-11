@@ -1,0 +1,50 @@
+# git学习笔记
+- 常用命令
+	- git init   创建版本库
+	- git add   文件名        提交文件，可以提交多次文件
+	- git commit  -m“XXXX”   提交版本，把所有add的全部提交，XXXX为更新内容说明
+	- git diff  文件名    查看当前版本与仓库版本的差异
+	- git status   查看git状态，是否有未提交的内容。
+	- git log  查看日志
+	- git reset —hard HEAD^   回退版本， HEAD^代表上一个版本，也可以用HEAD～100代表回退到第100个版本，也可以用git reset —hard commit_id  ，id只需要显示前几位，git会自动搜索。
+	- git reflog  查看所有的日志操作
+	- git checkout — file，即把工作区的修改全部撤销；这个时候有两种情况，一种是还没提交在暂存区，则恢复到这次修改之前的情况，还有一种是会到提交到暂存区的状态。
+	- git reset HEAD file，将分支上的内容覆盖会暂存区，但是工作区的内容不会变，要工作区被覆盖，就要用到git checkout — file将暂存区的内容覆盖到工作区，用于应对add到暂存区但是没有commit的情况
+	- git rm file 删除文件，删除之后没有进行commit，是可以通过checkout找回的，但是commit之后就找不回来了
+	- git push -u origin master  提交内容到github，用的git push命令，相当于把当前分支master推送到远程
+	- git checkout -b dev   创建dev分支，并切换到dev分支，-b代表切换到意思，这个相当于git branch dev和git checkout dev
+	- git branch  查看分支情况，当前分支前面会有一个*号显示
+	- git merge dev  合并制定分支dev到当前分支上
+	- git branch -d dev  删除分支
+	- git log —graph  查看分支合并图
+	- git merge --no-ff -m "merge with no-ff" dev  强制不快速合并，因为需要创建一个新的commit，所以要带上-m参数，填写commit的信息
+	- git stash隐藏当前工作去，想去解决其他bug，然后合并的时候就不会报错还没有提交，git stash apply用于恢复，也可以用git stash pop恢复并把stash的内容删除掉。git stash list用于查看隐藏工作区的信息。———— 主要的场景就是我在这个branch上写到一半，我也不能提交，需要区处理另外一个问题的时候。
+	- 如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。小写的d用于删除已经合并的分支，大写的D用于删除没有合并的分支。
+	- git remote 查看远程仓库信息
+	- git remote -v 查看抓取和推送的信息
+	- git push origin 分支名称，推送对应分支到远程仓库，具体推送哪些根据开发情况自行决定。
+	- git tag <name> 新增标签，git tag 查看所有标签
+	- git tag <name> commit id 在对应的版本上打标签
+	- git show tagname，查看tag的明细
+	- 还可以在commit的时候直接加上标签信息。git tag -a v0.1 -m "version 0.1 released"
+	- 推送标签到远程仓库，用git push origin <tagname>，也可以git push origin --tags一次性推送所有没有推送的标签
+	- 删除标签用git tag -d tagname
+	- 删除远程仓库的标签，需要先删除本地的，然后用git push origin :refs/tags/v0.9 删除远程仓库的，后缀为对应的标签名称。
+
+- 其他概念
+	- 版本库中有stage，HEAD和master三部分，分别是暂存区，指针和第一个分支，都存储在默认隐藏的.git文件中，具体命令关系图如下，add提交到暂存区，commit提交到分支上。	
+       [image:07BA0603-DAAA-4458-AF95-A4648868A004-10241-00034141725304B5/5188E746-3493-4F08-BC3F-BAFA67CDC316.png]
+	- **git管理的是修改记录，而不是修改的文件，每一次修改都需要通过git add提交到暂存区，然后在commit才会创建分支。**
+	- 要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；关联后，使用命令git push -u origin master第一次推送master分支的所有内容；此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
+	- 一般开始一个新项目，现在github创建空的远程仓库，然后用git clone命令克隆下来，具体命令为git clone git@github.com:orance/webpython.git，后面的orance／webpython.git 是仓库的名称
+	- HEAD是指向master，master在指向具体位置，创建的分支就是与主分支平级的dev，然后HEAD指向哪里就是哪个分支
+         [image:ED9D6E68-4600-45A0-BC7A-5C5F9331EE96-10241-000346FB5C22E098/937D7574-707D-4636-BF81-F80B2F3E61CC.png]
+	- 合并有快速合并的方式，即Fast forward，命令是git merge dev，就是将当前分支的head指向dev分支，所以合并很快，但是删除分支之后很很容易丢失分支信息，还有一种强制禁用快速合并的方式，会在合并的时候，新创建一个版本（commit）。
+	[image:16B5ABF1-7635-4B73-BB7E-A3B1A8EB934C-10241-0003517A84A71A70/E54804DC-7120-4945-93A3-1AD64380B184.png]
+	- 不管是修复一个bug还是添加一个新的功能，最好都在一个新创建的branch上操作，功能开发完成没问题后在合并分支。
+	- 标签tag与commit类似，相当于commit的一个注释，但是是不能修改的，主要为了方便查找对应的commit
+
+
+
+
+#学习笔记

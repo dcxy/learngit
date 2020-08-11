@@ -1,0 +1,43 @@
+Git add xxx.xxx	
+Git commit -m"description"	
+Git status	
+Git log	
+Git diff xxx.xxx 	
+Git reset --hard HEAD	回复上一次commit时的状态
+Git checkout -- xxx.xxx  	总之，就是让这个文件回到最近一次git commit或git add时的状态。（中间空格两个）
+Git  reset HEAD file	可以把stage区的修改撤销掉（unstage），重新放回工作区
+	即从暂存区恢复到工作文件
+Git rm xxx.xxx	删除xxx文件，然后可以确认删除commit
+	或者check out --xxx.xxx（用版本库里的恢复xxx文件）
+Git remote add origin git@server-name:path or account-name/repo-name	在本地目录下关联远程库
+Git push -u origin master	当远程库为空时，第一次推送带上-u参数
+Git push origin master	本地做了提交，就可以通过此命令push到github
+Git remote remove origin	取消本地目录下关联的远程库
+Git clone git@server-name:path or account-name/repo-name	克隆远程库到本地库
+Git branch dev	创建dev分支
+Git checkout dev	切换到dev分支
+Git checkout -b dev	创建并切换到dev分支
+Git branch	查看当前分支
+Git checkout master	切换到分支（master）
+Git merge dev	将指定分支（dev）合并到当前分支
+Git branch -d dev	将指定分支删除
+	合并冲突时git status查看冲突文件、去修改文件、修改完后去add并commit
+Git log --graph	查看分支合并图
+git log --graph --pretty=oneline --abbrev-commit	同上
+Git stash	把工作现场储存起来，并把工作区的修改和stage区清空
+Git stash apply	工作区和stage区从stash中恢复，不清除stash
+Git stash drop 	扔了stash
+Git stash pop	工作区和stage区从stash中恢复，并清除stash
+Git stash list	查看stash内容（可以多次stash，然后指定恢复哪一个）     如使用git stash apply stash@{0}
+Git branch -D  <分支名>	将没有合并的分支强制删除
+Git tag  v1.0	这是默认操作，给当前commit打上标签
+Git tag	查看所有标签
+Git tag -d v1.0	删除v1.0标签
+Git tag v1.0 commit-id	给指定commitID号的commit打上标签
+Git show v1.0	用标签号查看commit
+Git tag -a v1.0 -m "bula" commit-id	给指定commit打上标签并著名说明文字“bula”
+git tag -s <tagname> -m "blablabla..."	可以用pgp签名标签
+Git push origin <tagname>	推送一个本地标签
+Git push origin --tags	推送全部未推送过的本地标签
+Git tag -d <tagname>	删除一个本地标签
+Git push origin :refs/tags/<tagname>	删除一个远程标签（先删除本地标签）
