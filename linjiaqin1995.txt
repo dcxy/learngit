@@ -1,0 +1,20 @@
+
+老师的教材里push直接利用ssh连接提交，在我自己操作时却出现需要输入帐号密码的问题。很麻烦。 
+查了一些文章后终于找到解决方法。
+
+
+
+在repo目录下的.git/config里面，url是HTTPS形式。
+
+[remote “origin”] 
+fetch = + refs/heads/:refs/remotes/origin/ 
+url = https://username@github.com/username/projectname.git 
+远程版本库的url是HTTPS，问题就出在这了，每次都很不方便，都要输入用户名和密码。
+
+为了使用SSH公钥的方式认证，把config的url改成下面这样
+
+[remote “origin”] 
+fetch = + refs/heads/:refs/remotes/origin/ 
+url = git@github.com:username/projectname.git
+
+这样，push时候就不用写帐号密码了。

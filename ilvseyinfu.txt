@@ -1,0 +1,798 @@
+....
+....
+....
+....
+Last login: Wed Oct 25 14:17:04 on ttys003
+➜  ~ ls
+Applications Desktop      Documents    Downloads    Library      Movies       Music        Pictures     Public       react-demos  text         work
+➜  ~ mkdir gitwork
+➜  ~ ls
+Applications Desktop      Documents    Downloads    Library      Movies       Music        Pictures     Public       gitwork      react-demos  text         work
+➜  ~ cd gitwork
+➜  gitwork git init
+Initialized empty Git repository in /Users/liuyixiang/gitwork/.git/
+➜  gitwork git:(master) vim readme.txt
+➜  gitwork git:(master) ✗ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	readme.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+➜  gitwork git:(master) ✗ cat readme.txt
+....
+➜  gitwork git:(master) ✗ vim readme.txt
+➜  gitwork git:(master) ✗ git diff
+➜  gitwork git:(master) ✗ git diff readme.txt
+➜  gitwork git:(master) ✗ git add readme.txt
+➜  gitwork git:(master) ✗ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   readme.txt
+
+➜  gitwork git:(master) ✗ git diff
+➜  gitwork git:(master) ✗ vim readme.txt
+➜  gitwork git:(master) ✗ git diff readme.txt
+➜  gitwork git:(master) ✗ git diff
+➜  gitwork git:(master) ✗ git add readme.txt
+➜  gitwork git:(master) ✗ git diff
+
+➜  gitwork git:(master) ✗ vim readme.txt
+➜  gitwork git:(master) ✗ git diff
+➜  gitwork git:(master) ✗ git diff --staged
+➜  gitwork git:(master) ✗ git commit -m "first commit"
+[master (root-commit) 1beda2c] first commit
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 3 insertions(+)
+ create mode 100644 readme.txt
+➜  gitwork git:(master) ✗ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+➜  gitwork git:(master) ✗ git add readme.txt
+➜  gitwork git:(master) ✗ git commit -m "second commit"
+[master 7f5b348] second commit
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+➜  gitwork git:(master) git status
+On branch master
+nothing to commit, working tree clean
+➜  gitwork git:(master) vim test.txt
+➜  gitwork git:(master) ✗ git add test.txt
+➜  gitwork git:(master) ✗ git commit -m "add test.txt"
+[master 3d5a3b6] add test.txt
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test.txt
+➜  gitwork git:(master) ls
+readme.txt test.txt
+➜  gitwork git:(master) rm test.txt
+➜  gitwork git:(master) ✗ ls
+readme.txt
+➜  gitwork git:(master) ✗ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	deleted:    test.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+➜  gitwork git:(master) ✗ git rm test.txt
+rm 'test.txt'
+➜  gitwork git:(master) ✗ git commit -m "remove test.txt"
+[master e408265] remove test.txt
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 test.txt
+➜  gitwork git:(master) ls
+readme.txt
+➜  gitwork git:(master) git status
+On branch master
+nothing to commit, working tree clean
+➜  gitwork git:(master) git mv readme.txt readme
+➜  gitwork git:(master) ✗ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	renamed:    readme.txt -> readme
+
+➜  gitwork git:(master) ✗ git commit -m "rename readme.txt to readme"
+[master 18fc5b9] rename readme.txt to readme
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+....
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename readme.txt => readme (100%)
+➜  gitwork git:(master) ls
+readme
+➜  gitwork git:(master) git log
+➜  gitwork git:(master) git log -p
+➜  gitwork git:(master) git log -p -2
+....
+➜  gitwork git:(master) git log -stat
+fatal: unrecognized argument: -stat
+➜  gitwork git:(master) git log --stat
+➜  gitwork git:(master) git log --pretty=oneline
+➜  gitwork git:(master) git log --pretty=oneline
+➜  gitwork git:(master) git reset --hard  1beda2c
+HEAD is now at 1beda2c first commit
+➜  gitwork git:(master) git log --pretty=oneline
+➜  gitwork git:(master) git log --pretty=oneline
+➜  gitwork git:(master) git refog
+git: 'refog' is not a git command. See 'git --help'.
+
+The most similar command is
+	reflog
+➜  gitwork git:(master) git reflog
+➜  gitwork git:(master) git log --stat
+➜  gitwork git:(master) git reflog
+➜  gitwork git:(master) git reset --hard 18fc5b9
+HEAD is now at 18fc5b9 rename readme.txt to readme
+➜  gitwork git:(master) git log --pretty=oneline
+➜  gitwork git:(master) git log --pretty=oneline --graph
+➜  gitwork git:(master) cat readme.txt
+cat: readme.txt: No such file or directory
+➜  gitwork git:(master) ls
+readme
+➜  gitwork git:(master) cat readme
+....
+...
+...
+insert new row.
+➜  gitwork git:(master) vim readme
+➜  gitwork git:(master) ✗ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme
+
+no changes added to commit (use "git add" and/or "git commit -a")
+➜  gitwork git:(master) ✗ git checkout -- readme
+➜  gitwork git:(master) git status
+On branch master
+nothing to commit, working tree clean
+➜  gitwork git:(master) cat readme
+....
+...
+...
+insert new row.
+➜  gitwork git:(master) vim readme
+➜  gitwork git:(master) ✗ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme
+
+no changes added to commit (use "git add" and/or "git commit -a")
+➜  gitwork git:(master) ✗ git add readme
+➜  gitwork git:(master) ✗ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   readme
+
+➜  gitwork git:(master) ✗ git reset HEAD readme
+Unstaged changes after reset:
+M	readme
+➜  gitwork git:(master) ✗ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme
+
+no changes added to commit (use "git add" and/or "git commit -a")
+➜  gitwork git:(master) ✗ git checkout -- readme
+➜  gitwork git:(master) git status
+On branch master
+nothing to commit, working tree clean
+➜  gitwork git:(master) git remote
+➜  gitwork git:(master) git remote add origin https://github.com/ilvseyinfu/learngit2.git
+➜  gitwork git:(master) git remote add origin https://github.com/ilvseyinfu/learngit2.git
+fatal: remote origin already exists.
+➜  gitwork git:(master) git push -u origin master
+Username for 'https://github.com': ilvseyinfu
+Password for 'https://ilvseyinfu@github.com':
+Counting objects: 12, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (12/12), 1.05 KiB | 359.00 KiB/s, done.
+Total 12 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), done.
+To https://github.com/ilvseyinfu/learngit2.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+➜  gitwork git:(master) ../
+➜  ~ ls
+Applications Desktop      Documents    Downloads    Library      Movies       Music        Pictures     Public       gitwork      react-demos  text         work
+➜  ~ git clone https://github.com/ilvseyinfu/learngit2
+Cloning into 'learngit2'...
+remote: Counting objects: 12, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 12 (delta 2), reused 12 (delta 2), pack-reused 0
+Unpacking objects: 100% (12/12), done.
+➜  ~ ls
+Applications Desktop      Documents    Downloads    Library      Movies       Music        Pictures     Public       gitwork      learngit2    react-demos  text         work
+➜  ~ rm -rf learngit2
+➜  ~ ls
+Applications Desktop      Documents    Downloads    Library      Movies       Music        Pictures     Public       gitwork      react-demos  text         work
+➜  ~ git clone https://github.com/ilvseyinfu/learngit2
+Cloning into 'learngit2'...
+remote: Counting objects: 12, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 12 (delta 2), reused 12 (delta 2), pack-reused 0
+Unpacking objects: 100% (12/12), done.
+➜  ~ ls
+Applications Desktop      Documents    Downloads    Library      Movies       Music        Pictures     Public       gitwork      learngit2    react-demos  text         work
+➜  ~ cd learngit2
+➜  learngit2 git:(master) git remote
+origin
+➜  learngit2 git:(master) git remote
+origin
+➜  learngit2 git:(master) git remote add pb https://github.com/ilvseyinfu/learngit3.git
+➜  learngit2 git:(master) git push -u pb master
+Counting objects: 12, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (12/12), 1.05 KiB | 359.00 KiB/s, done.
+Total 12 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), done.
+To https://github.com/ilvseyinfu/learngit3.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from pb.
+➜  learngit2 git:(master) git remote
+origin
+pb
+➜  learngit2 git:(master) git remote -v
+origin	https://github.com/ilvseyinfu/learngit2 (fetch)
+origin	https://github.com/ilvseyinfu/learngit2 (push)
+pb	https://github.com/ilvseyinfu/learngit3.git (fetch)
+pb	https://github.com/ilvseyinfu/learngit3.git (push)
+➜  learngit2 git:(master) git fetch pb
+➜  learngit2 git:(master) ls
+readme
+➜  learngit2 git:(master) git fetch origin
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/ilvseyinfu/learngit2
+   18fc5b9..8fcca36  master     -> origin/master
+➜  learngit2 git:(master) ls
+readme
+➜  learngit2 git:(master) ls
+readme
+➜  learngit2 git:(master) git fetch origin
+➜  learngit2 git:(master) ls
+readme
+➜  learngit2 git:(master) git pull
+Already up-to-date.
+➜  learngit2 git:(master) ls
+readme
+➜  learngit2 git:(master) git status
+On branch master
+Your branch is up-to-date with 'pb/master'.
+nothing to commit, working tree clean
+➜  learngit2 git:(master) git branch
+* master
+➜  learngit2 git:(master) git remote -v
+origin	https://github.com/ilvseyinfu/learngit2 (fetch)
+origin	https://github.com/ilvseyinfu/learngit2 (push)
+pb	https://github.com/ilvseyinfu/learngit3.git (fetch)
+pb	https://github.com/ilvseyinfu/learngit3.git (push)
+➜  learngit2 git:(master) git pull origin
+You asked to pull from the remote 'origin', but did not specify
+a branch. Because this is not the default configured remote
+for your current branch, you must specify a branch on the command line.
+➜  learngit2 git:(master) ls
+readme
+➜  learngit2 git:(master) git remote -v
+origin	https://github.com/ilvseyinfu/learngit2 (fetch)
+origin	https://github.com/ilvseyinfu/learngit2 (push)
+pb	https://github.com/ilvseyinfu/learngit3.git (fetch)
+pb	https://github.com/ilvseyinfu/learngit3.git (push)
+➜  learngit2 git:(master) git rename pb paul
+git: 'rename' is not a git command. See 'git --help'.
+
+The most similar command is
+	rebase
+➜  learngit2 git:(master) git remote rename bp paul
+fatal: No such remote: bp
+➜  learngit2 git:(master) git remote rename pb paul
+➜  learngit2 git:(master) git remote -v
+origin	https://github.com/ilvseyinfu/learngit2 (fetch)
+origin	https://github.com/ilvseyinfu/learngit2 (push)
+paul	https://github.com/ilvseyinfu/learngit3.git (fetch)
+paul	https://github.com/ilvseyinfu/learngit3.git (push)
+➜  learngit2 git:(master) git remote rm paul
+➜  learngit2 git:(master) git remote -v
+origin	https://github.com/ilvseyinfu/learngit2 (fetch)
+origin	https://github.com/ilvseyinfu/learngit2 (push)
+➜  learngit2 git:(master) git fetch origin master
+....
+From https://github.com/ilvseyinfu/learngit2
+ * branch            master     -> FETCH_HEAD
+➜  learngit2 git:(master) git branch -r
+  origin/HEAD -> origin/master
+  origin/master
+➜  learngit2 git:(master) git merge origin/master
+Updating 18fc5b9..8fcca36
+Fast-forward
+ hello | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 hello
+➜  learngit2 git:(master) ls
+hello  readme
+➜  learngit2 git:(master) git fetch origin
+➜  learngit2 git:(master) git branch -r
+  origin/HEAD -> origin/master
+  origin/master
+➜  learngit2 git:(master) git merge master
+Already up-to-date.
+➜  learngit2 git:(master) git pull origin master:master
+Already up-to-date.
+➜  learngit2 git:(master) git branch
+* master
+➜  learngit2 git:(master) git tag v1.0
+➜  learngit2 git:(master) git tag
+v1.0
+➜  learngit2 git:(master) git tag
+v1.0
+➜  learngit2 git:(master) git show v1.0
+➜  learngit2 git:(master) git show v1.0
+➜  learngit2 git:(master) git tag v1.1
+➜  learngit2 git:(master) git tag
+v1.0
+v1.1
+➜  learngit2 git:(master) git show v1.1
+➜  learngit2 git:(master) git checkout -b bev
+Switched to a new branch 'bev'
+➜  learngit2 git:(bev) ls
+hello  readme
+➜  learngit2 git:(bev) cat readm
+cat: readm: No such file or directory
+➜  learngit2 git:(bev) cat readme
+....
+...
+...
+insert new row.
+➜  learngit2 git:(bev) vim readme.txt
+➜  learngit2 git:(bev) ls
+....
+hello  readme
+➜  learngit2 git:(bev) vim readme
+➜  learngit2 git:(bev) ✗ git add readme
+➜  learngit2 git:(bev) ✗ git commit -m "branch test"
+[bev 402aa95] branch test
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+)
+➜  learngit2 git:(bev) git checkout master
+Switched to branch 'master'
+➜  learngit2 git:(master) cat readme
+....
+....
+...
+...
+insert new row.
+➜  learngit2 git:(master) git merge dev
+merge: dev - not something we can merge
+➜  learngit2 git:(master) cat readme
+....
+...
+...
+insert new row.
+➜  learngit2 git:(master) git branch
+  bev
+* master
+➜  learngit2 git:(master) git checkout bev
+Switched to branch 'bev'
+➜  learngit2 git:(bev) git checkout master
+Switched to branch 'master'
+➜  learngit2 git:(master) git merge bev
+Updating 8fcca36..402aa95
+Fast-forward
+ readme | 1 +
+ 1 file changed, 1 insertion(+)
+➜  learngit2 git:(master) git branch -d bev
+Deleted branch bev (was 402aa95).
+➜  learngit2 git:(master) git checkout -b feature1
+Switched to a new branch 'feature1'
+➜  learngit2 git:(feature1) vim readme
+➜  learngit2 git:(feature1) ✗ git add readme
+➜  learngit2 git:(feature1) ✗ git commit -m "AND simple"
+[feature1 622ee57] AND simple
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+)
+....
+➜  learngit2 git:(feature1) git checkout master
+Switched to branch 'master'
+➜  learngit2 git:(master) vim readme.txt
+➜  learngit2 git:(master) vim readme
+➜  learngit2 git:(master) vim readme
+➜  learngit2 git:(master) ✗ git add readme
+➜  learngit2 git:(master) ✗ git commit -m "& simple"
+[master e12f8e2] & simple
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+)
+➜  learngit2 git:(master) git merge feature1
+Auto-merging readme
+CONFLICT (content): Merge conflict in readme
+Automatic merge failed; fix conflicts and then commit the result.
+➜  learngit2 git:(master) ✗ git status
+On branch master
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+	both modified:   readme
+
+no changes added to commit (use "git add" and/or "git commit -a")
+➜  learngit2 git:(master) ✗ cat readme
+....
+...
+...
+insert new row.
+
+insert new branch.
+<<<<<<< HEAD
+two creating >..
+=======
+Creeting feature1....
+>>>>>>> feature1
+➜  learngit2 git:(master) ✗ vim readme
+➜  learngit2 git:(master) ✗ git add readme
+➜  learngit2 git:(master) ✗ git commit -m "conflict fixed"
+[master 020e056] conflict fixed
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+➜  learngit2 git:(master) cat readne
+cat: readne: No such file or directory
+➜  learngit2 git:(master) cat readme
+....
+...
+...
+insert new row.
+insert new branch.
+conflict fixed.
+➜  learngit2 git:(master) git checkout feature1
+Switched to branch 'feature1'
+➜  learngit2 git:(feature1) cat readme
+....
+...
+eqwwqqweqwqe
+...
+insert new row.
+insert new branch.
+Creeting feature1....
+➜  learngit2 git:(feature1) git checkout master
+Switched to branch 'master'
+➜  learngit2 git:(master) git branch -d feature1
+Deleted branch feature1 (was 622ee57).
+bug fixed
+➜  learngit2 git:(master) git log
+➜  learngit2 git:(master) git log --pretty=oneline --graph
+➜  learngit2 git:(master) git checkout -b dev
+Switched to a new branch 'dev'
+➜  learngit2 git:(dev) vim readme.txt
+➜  learngit2 git:(dev) ✗ git add reamde.txt
+fatal: pathspec 'reamde.txt' did not match any files
+➜  learngit2 git:(dev) ✗ git add readme.txt
+➜  learngit2 git:(dev) ✗ git commit -m "add merge"
+[dev ee75ff0] add merge
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 readme.txt
+➜  learngit2 git:(dev) git checkout master
+Switched to branch 'master'
+➜  learngit2 git:(master) git merge --no-ff -m "merge with no-ff" dev
+Merge made by the 'recursive' strategy.
+ readme.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 readme.txt
+➜  learngit2 git:(master) git log --graph --pretty=oneline
+➜  learngit2 git:(master) git log --graph --pretty=oneline
+➜  learngit2 git:(master) git branch
+  dev
+* master
+➜  learngit2 git:(master) git checkout dev
+Switched to branch 'dev'
+➜  learngit2 git:(dev) ls
+hello      readme     readme.txt
+➜  learngit2 git:(dev) vim readme.txt
+➜  learngit2 git:(dev) ✗ git stash
+Saved working directory and index state WIP on dev: ee75ff0 add merge
+➜  learngit2 git:(dev) git checkout master
+Switched to branch 'master'
+➜  learngit2 git:(master) git checkout -b issue-01
+Switched to a new branch 'issue-01'
+➜  learngit2 git:(issue-01) cat readme.txt
+➜  learngit2 git:(issue-01) vim readme.txt
+➜  learngit2 git:(issue-01) ✗ git add readme.txt
+➜  learngit2 git:(issue-01) ✗ git commit -m "fix bug 101"
+[issue-01 7abb641] fix bug 101
+ Committer: 刘毅翔 <liuyixiang@INSysAApp-6476bab5aca8.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+)
+➜  learngit2 git:(issue-01) git checkout master
+Switched to branch 'master'
+➜  learngit2 git:(master) git merge issue-01
+Updating 53c320a..7abb641
+Fast-forward
+ readme.txt | 1 +
+ 1 file changed, 1 insertion(+)
+➜  learngit2 git:(master) git checkout dev
+Switched to branch 'dev'
+➜  learngit2 git:(dev) git stash list
+➜  learngit2 git:(dev) git stash pop
+On branch dev
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (c4b6237ae375864a3a423e9789e81b73295955f2)
+➜  learngit2 git:(dev) ✗ git stash list
+➜  learngit2 git:(dev) ✗ git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> dev
+
+➜  learngit2 git:(dev) ✗ sl
+zsh: command not found: sl
+➜  learngit2 git:(dev) ✗ ls
+hello      readme     readme.txt
+➜  learngit2 git:(dev) ✗ git pull
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/ilvseyinfu/learngit2
+   8fcca36..81ebb5e  master     -> origin/master
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> dev
+
+➜  learngit2 git:(dev) ✗ ls
+hello      readme     readme.txt
+➜  learngit2 git:(dev) ✗ git st
+git: 'st' is not a git command. See 'git --help'.
+
+The most similar commands are
+	status
+	reset
+	stage
+	stash
+	svn
+➜  learngit2 git:(dev) ✗ git checkout -b dev-2
+M	readme.txt
+Switched to a new branch 'dev-2'
+➜  learngit2 git:(dev-2) ✗ git branch -a
+  dev
+* dev-2
+  issue-01
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+➜  learngit2 git:(dev-2) ✗ git checkout -b dev-3
+M	readme.txt
+Switched to a new branch 'dev-3'
+➜  learngit2 git:(dev-3) ✗ git checkout -b dev-4 origin/master
+—graph显示图形显示的分支合并历史
+提交历史放在一行显示：git log —pretty=oneline
+如果想退回到上一个版本：git reset —hard HEAD^
+HEAD表示当前版本 HEAD^表示上一个版本 HEAD^^表示上上一个
+往上100个版本HEAD~100
+退回到指定版本号的版本：git reset —hard [版本号]
+查看每一次命令(命令历史)：git reflog
+放弃工作区的修改：git checkout — [FileName]
+把暂存区的修改放弃掉：git reset HEAD [FileName] 然后可以继续放弃工作区的修改
+
+ 远程仓库是指托管在因特网或其他网络中的你的项目的版本库。
+将本地项目关联到远程库：git remote add origin [URL]
+添加一个新的远程仓库：git remote add [remote-name] [url]
+远程仓库重命名：git rename [old-name] [new-name]
+移除某一个远程仓库：git remote rm [remote-name]
+将本地库的所有内容推送到远程库(第一次)：git push -u origin master
+以后推送时：git push origin [分支名称]
+从远程库克隆一个到本地：git clone [URL]
+默认远程仓库为 origin 如果想换远程仓库名：git clone -o [remote-name] [url]
+查看已经配置的远程仓库服务器：git remote -v
+-v 会显示远程仓库使用的git以及对应的URL
+取回远程某个分支的更新，再与本地某个分支合并：git pull [远程主机名] [远程分支名]:[本地分支名]
+抓取最新的分支：git pull
+
+打一个新标签：git tag [tag-name]
+查看所有标签：git tag
+指定在某一次提交后面打标签：git tag [tag-name] [commit-id]
+查看标签信息：git show [tag-name]
+创建带有说明的标签：git tag -a [tag-name] -m [description-message] [commit-id]
+推送标签：git push origin [tag-name]
+一次性的推送很多标签：git push origin —tags
+
+创建一个新的分支并且切换到新的分支：git checkout -b [branch-name]
+查看当前所有分支：git branch
+切换分支：git checkout [branch-name]
+合并指定分支到当前分支(快速融合),如果不行要解决冲突：git merge [branch-name]
+删除指定分支：git branch -d [branch-name]
+查看分支合并图：git log —graph
+合并分支禁用fast forward(合并要创建一个新的commit)：git merge —no-ff -m “description-message” dev
+把工作现场存储起来(查看工作区就是干净的)：git stash
+查看工作现场存到哪里了：git stash list
+恢复工作现场,同时删除stash内容：git stash pop
+丢弃一个没有被合并过的分支：git branch -D [branch-name]
+
+从当前分支创建dev分支  git checkout -b dev 等同于 git checkout -b dev origin/dev
+从master分支创建dev分支 git checkout -b dev origin/master
+
+
+
+
+
